@@ -1,0 +1,450 @@
+/* CU03 · Ubicaciones en revisión (Figura 16). Tres tamaños: --t-titulo, --t-cuerpo, --t-chico. */
+
+.pagina {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 296px minmax(0, 1fr);
+  min-height: 0;
+}
+
+/* ── Lista de pendientes ─────────────────────────────────────────────── */
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-5);
+  padding-block: var(--e-5);
+  border-right: 1px solid var(--linea);
+  background: var(--papel);
+}
+
+.titLista {
+  padding-inline: var(--e-5);
+  margin-bottom: var(--e-2);
+  font-size: var(--t-cuerpo);
+  font-weight: 800;
+  color: var(--tinta);
+}
+
+.cuenta {
+  font-weight: 400;
+  color: var(--tenue);
+}
+
+/* Fechas, coordenadas y cifras: Archivo con números tabulares (Courier sólo para registros y km). */
+.cifras {
+  font-variant-numeric: tabular-nums;
+}
+
+/* «Últimas revisiones», separada de los pendientes por una línea propia. */
+.revisadas {
+  margin-top: var(--e-2);
+  padding-top: var(--e-5);
+  border-top: 1px solid var(--linea);
+}
+
+.items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--linea-suave);
+}
+
+.items > li {
+  border-bottom: 1px solid var(--linea-suave);
+}
+
+/* El estado tiñe la fila entera: ámbar rayado mientras espera revisión. */
+.item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--e-3);
+  width: 100%;
+  padding: var(--e-3) var(--e-5);
+  border: 0;
+  background-color: var(--ambar-f);
+  background-image: var(--rayado-revision);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--dur-2) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .item:hover {
+    background-color: color-mix(in oklch, var(--ambar-f) 55%, var(--carbon-f));
+  }
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--carbon);
+  outline-offset: -2px;
+}
+
+/* Selección: tinte carbónico y peso, sin franja lateral. */
+.itemSel,
+.itemSel:hover {
+  background-color: var(--carbon-f);
+}
+
+.itemIdentidad {
+  display: flex;
+  padding-top: 2px;
+}
+
+.itemTexto {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.itemNombre {
+  font-weight: 700;
+}
+
+.itemSel .itemNombre {
+  font-weight: 800;
+}
+
+.itemSel .itemMotivo {
+  color: var(--tinta);
+}
+
+.itemMotivo {
+  color: var(--tenue);
+  font-size: var(--t-chico);
+}
+
+.itemPie {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  margin-top: var(--e-1);
+}
+
+.listaVacia {
+  padding-inline: var(--e-5);
+  color: var(--tenue);
+}
+
+.revisada {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--e-3);
+  padding: var(--e-2) var(--e-5);
+}
+
+.revisadaConfirmada {
+  background: var(--verde-f);
+}
+
+.revisadaConfirmada .itemMotivo {
+  color: var(--verde-tinta);
+}
+
+.revisadaDescartada .itemNombre {
+  color: var(--tenue);
+  font-weight: 600;
+}
+
+.itemFirma {
+  font-size: var(--t-chico);
+  font-variant-numeric: tabular-nums;
+  color: var(--tenue);
+}
+
+/* ── Zona principal ──────────────────────────────────────────────────── */
+.principal {
+  display: grid;
+  align-content: start;
+  gap: var(--e-4);
+  padding: var(--e-5);
+  min-width: 0;
+}
+
+.resultadoFoco:focus {
+  outline: none;
+}
+
+.resultadoFoco:focus-visible > .resultado {
+  outline: 2px solid var(--carbon);
+  outline-offset: 2px;
+}
+
+.resultadoFoco:empty {
+  display: none;
+}
+
+.resultado {
+  display: grid;
+  gap: var(--e-1);
+  padding: var(--e-3) var(--e-4);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-2);
+}
+
+.resultadoOk {
+  background: var(--verde-f);
+  border-color: color-mix(in oklch, var(--verde) 35%, var(--papel));
+}
+
+.resultadoAlerta {
+  background: var(--rojo-f);
+  border-color: color-mix(in oklch, var(--rojo) 40%, var(--papel));
+}
+
+.resultadoNeutro {
+  background: var(--papel);
+}
+
+.resultadoTitulo {
+  font-weight: 700;
+}
+
+.alertas {
+  margin: var(--e-1) 0 0;
+  padding-left: 1.2em;
+  color: var(--rojo-tinta);
+  font-weight: 600;
+}
+
+.detalle {
+  display: grid;
+  gap: var(--e-4);
+  min-width: 0;
+}
+
+.cabeza {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--e-3) var(--e-5);
+}
+
+.nombre {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--e-3);
+  min-width: 0;
+}
+
+.h2 {
+  font-size: var(--t-titulo);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.tenue {
+  color: var(--tenue);
+}
+
+.datos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2) var(--e-5);
+  margin: 0;
+}
+
+.datos dt {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.datos dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.confianza {
+  min-width: 168px;
+}
+
+.cronica {
+  margin: 0;
+  display: grid;
+  gap: var(--e-2);
+  padding: var(--e-4);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-2);
+  background: var(--papel);
+}
+
+.cita {
+  margin: 0;
+  max-width: 75ch;
+  line-height: 1.6;
+}
+
+.resaltado {
+  padding: 1px 2px;
+  background: var(--ambar-f);
+  box-shadow: inset 0 -2px 0 var(--ambar);
+  color: inherit;
+}
+
+.fuente {
+  font-size: var(--t-chico);
+  font-variant-numeric: tabular-nums;
+  color: var(--tenue);
+}
+
+.trabajo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: var(--e-5);
+  align-items: start;
+}
+
+.zonaMapa {
+  display: grid;
+  gap: var(--e-3);
+  min-width: 0;
+}
+
+.marcoMapa {
+  height: 440px;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-2);
+  background: var(--papel);
+  overflow: hidden;
+}
+
+.panel {
+  display: grid;
+  gap: var(--e-4);
+  align-content: start;
+}
+
+.leyenda {
+  display: grid;
+  gap: var(--e-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--t-chico);
+}
+
+.leyenda li {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+.punto {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--papel);
+  box-shadow: 0 0 0 1px var(--linea);
+}
+
+.puntoPropuesta {
+  background: var(--ambar);
+}
+
+.puntoCorregida {
+  background: var(--carbon);
+}
+
+.motivo {
+  display: grid;
+  gap: var(--e-2);
+  max-width: 60ch;
+}
+
+.posicion {
+  display: grid;
+  gap: 2px;
+}
+
+.rotulo {
+  font-size: var(--t-chico);
+  font-weight: 600;
+  color: var(--tenue);
+}
+
+.ayuda {
+  margin-top: var(--e-1);
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.formKm {
+  display: grid;
+  gap: var(--e-2);
+  justify-items: start;
+}
+
+.formKm > :first-child {
+  width: 100%;
+}
+
+.acciones {
+  display: grid;
+  gap: var(--e-2);
+}
+
+.descarte {
+  display: grid;
+  gap: var(--e-2);
+  padding: var(--e-3);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-2);
+  background: var(--papel);
+}
+
+.filaBotones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+}
+
+.firma {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+@media (max-width: 1180px) {
+  .trabajo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .panel {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    align-items: start;
+  }
+}
+
+@media (max-width: 900px) {
+  .pagina {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lista {
+    border-right: 0;
+    border-bottom: 1px solid var(--linea);
+    padding-block: var(--e-4);
+  }
+
+  .titLista,
+  .item,
+  .revisada,
+  .listaVacia {
+    padding-inline: var(--e-4);
+  }
+
+  .principal {
+    padding: var(--e-4);
+  }
+
+  .marcoMapa {
+    height: 320px;
+  }
+
+  .panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+

@@ -1,0 +1,605 @@
+/*
+ * Ficha de intervención: un acta en papel sobre la grilla. Tres tamaños de
+ * letra (grande para el lugar, cuerpo y chico); el peso da la jerarquía.
+ */
+
+.pagina {
+  display: grid;
+  gap: var(--e-4);
+  padding: var(--e-5);
+  align-content: start;
+}
+
+.listado {
+  display: grid;
+  align-content: start;
+}
+
+.intro,
+.notaPagina {
+  color: var(--tenue);
+  max-width: 72ch;
+}
+
+.intro {
+  padding: var(--e-4) 20px 0;
+}
+
+.notaPagina {
+  font-size: var(--t-chico);
+  padding: var(--e-3) 20px var(--e-5);
+}
+
+.tenue {
+  color: var(--tenue);
+  font-weight: 400;
+}
+
+/* ── Acta ─────────────────────────────────────────────────────────────── */
+
+.acta {
+  max-width: 1280px;
+  background: var(--papel);
+  border: 1px solid var(--linea);
+  box-shadow: 0 1px 2px oklch(0.25 0.03 262 / 0.06);
+}
+
+.borrador {
+  border-style: dashed;
+  border-color: var(--tenue);
+}
+
+.cabeza {
+  display: grid;
+  gap: var(--e-3);
+  padding: var(--e-4) var(--e-5);
+  border-bottom: 2px solid var(--tinta);
+}
+
+.renglonRegistro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2) var(--e-5);
+  padding-bottom: var(--e-3);
+  border-bottom: 1px solid var(--linea-suave);
+}
+
+.numeroActa {
+  font-weight: 700;
+}
+
+.numeroActa :global(.registro) {
+  font-weight: 700;
+}
+
+.registroDe {
+  color: var(--tenue);
+  font-size: var(--t-chico);
+}
+
+.registroDe b {
+  color: var(--tinta);
+  font-weight: 600;
+}
+
+.renglonRegistro > :last-child {
+  margin-left: auto;
+}
+
+.lugar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-3) var(--e-4);
+}
+
+.lugarTexto {
+  flex: 1 1 280px;
+  min-width: 0;
+  display: grid;
+  gap: var(--e-1);
+}
+
+.nombreLugar {
+  font-size: var(--t-titulo);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.ambito {
+  color: var(--tenue);
+}
+
+.indice {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+}
+
+.columna {
+  display: grid;
+  align-content: start;
+  min-width: 0;
+}
+
+.columna + .columna {
+  border-left: 1px solid var(--linea);
+}
+
+.seccion {
+  display: grid;
+  gap: var(--e-3);
+  align-content: start;
+  min-width: 0;
+  padding: var(--e-4) var(--e-5) var(--e-5);
+}
+
+.seccion + .seccion {
+  border-top: 1px solid var(--linea);
+}
+
+.h3 {
+  font-size: var(--t-cuerpo);
+  font-weight: 700;
+}
+
+.nota {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+  max-width: 72ch;
+}
+
+.nota b {
+  color: var(--tinta);
+  font-weight: 600;
+}
+
+/* Caracterización: renglones de formulario */
+.datos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--e-4);
+  margin: 0;
+  border-top: 1px solid var(--linea-suave);
+}
+
+.datos > div {
+  display: grid;
+  align-content: start;
+  gap: 1px;
+  padding: var(--e-2) 0;
+  border-bottom: 1px solid var(--linea-suave);
+  min-width: 0;
+}
+
+.datos dt {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.datos dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.ancho2 {
+  grid-column: span 2;
+}
+
+.fatal {
+  color: var(--rojo-tinta);
+}
+
+/* Siniestros, en el orden del croquis */
+.siniestros {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--linea-suave);
+}
+
+.siniestro {
+  display: grid;
+  grid-template-columns: 24px 64px minmax(0, 1fr) auto;
+  gap: 2px var(--e-3);
+  align-items: baseline;
+  padding: var(--e-2) 0;
+  border-bottom: 1px solid var(--linea-suave);
+}
+
+.num {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1.6px solid var(--tinta);
+  border-radius: 50%;
+  font-size: var(--t-chico);
+  font-weight: 700;
+  line-height: 1;
+  align-self: center;
+}
+
+.numFatal {
+  border-color: var(--rojo);
+  color: var(--rojo-tinta);
+}
+
+.descSin {
+  display: grid;
+  min-width: 0;
+}
+
+.descSin small {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.posSin {
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* Contramedidas */
+.medidas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--linea);
+}
+
+.medidas > li {
+  border-bottom: 1px solid var(--linea);
+}
+
+.medidas > li.medida,
+.medidas > li > .medida {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--e-1) var(--e-4);
+  align-items: start;
+  padding: var(--e-3) var(--e-2);
+}
+
+.medidas > li > .medidaElegible {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  cursor: pointer;
+  transition: background-color var(--dur-1) var(--ease-out);
+}
+
+.medidas > li > .medidaElegida {
+  background: var(--carbon-f);
+}
+
+/* Elegida: tinte carbónico y peso; sin elegir, el nombre baja de peso. */
+.medidaElegible .nombreMedida {
+  font-weight: 500;
+}
+
+.medidaElegible.medidaElegida .nombreMedida {
+  font-weight: 800;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .medidas > li > .medidaElegible:hover {
+    background: var(--papel-2);
+  }
+  .medidas > li > .medidaElegida:hover {
+    background: var(--carbon-f-2);
+  }
+}
+
+.casilla {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+}
+
+.medidaTexto {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.nombreMedida {
+  font-weight: 700;
+}
+
+.lineaMedida {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-1) 6px;
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.refMedida {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.factor {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.estrellas {
+  display: inline-flex;
+  gap: 1px;
+}
+
+.estrellaLlena {
+  fill: var(--tinta);
+}
+
+.estrellaVacia {
+  fill: none;
+  stroke: var(--tenue);
+  stroke-width: 1;
+}
+
+.avisoCatalogo {
+  padding: var(--e-3);
+  border: 1px solid color-mix(in oklch, var(--ambar) 45%, transparent);
+  border-radius: var(--radio);
+  background: var(--rayado-revision), var(--ambar-f);
+  color: var(--ambar-tinta);
+  font-weight: 600;
+}
+
+.emitir {
+  display: grid;
+  gap: var(--e-2);
+  padding-top: var(--e-2);
+}
+
+.botones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+.error {
+  color: var(--rojo-tinta);
+  font-size: var(--t-chico);
+  font-weight: 600;
+}
+
+.pieActa {
+  padding: var(--e-3) var(--e-5);
+  border-top: 1px solid var(--linea);
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+/* Cierre del acta: quién la emitió, cuándo, folio y la línea de firma. */
+.cierre {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, auto)) minmax(200px, 1fr);
+  align-items: start;
+  gap: var(--e-3) var(--e-5);
+  padding: var(--e-4) var(--e-5);
+  border-top: 1px solid var(--linea);
+  break-inside: avoid;
+}
+
+.cierre dt {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.cierre dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.cierre dd small {
+  display: block;
+  font-size: var(--t-chico);
+  font-weight: 400;
+  color: var(--tenue);
+}
+
+.firma {
+  align-self: end;
+  display: grid;
+  gap: var(--e-1);
+  padding-top: var(--e-5);
+}
+
+.cierre .firma dd {
+  font-weight: 400;
+}
+
+.lineaFirma {
+  border-bottom: 1px solid var(--tinta);
+}
+
+.firma p {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+/* Fechas y cifras: Archivo tabular, no la letra de registro. */
+.cifra {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Listas ───────────────────────────────────────────────────────────── */
+
+.busqueda {
+  flex: 0 1 380px;
+  min-width: 0;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.busqueda input {
+  min-width: 0;
+  width: 100%;
+}
+
+.lugarFila {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.lugarNombre {
+  display: block;
+  font-weight: 600;
+}
+
+.lugarSub {
+  display: block;
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.enlaceNumero {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.medidasFila {
+  font-size: var(--t-chico);
+}
+
+/* ── Pantallas angostas ───────────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+  .cuerpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .columna + .columna {
+    border-left: 0;
+    border-top: 1px solid var(--linea);
+  }
+}
+
+@media (max-width: 640px) {
+  .pagina {
+    padding: var(--e-4);
+  }
+  .intro,
+  .notaPagina {
+    padding-inline: var(--e-4);
+  }
+  .cabeza,
+  .seccion,
+  .pieActa,
+  .cierre {
+    padding-inline: var(--e-4);
+  }
+  .cierre {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .firma {
+    grid-column: 1 / -1;
+  }
+  .renglonRegistro > :last-child {
+    margin-left: 0;
+  }
+  .datos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .siniestro {
+    grid-template-columns: 24px minmax(0, 1fr) auto;
+  }
+  .num {
+    grid-row: 1;
+  }
+  .fechaSin {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .posSin {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .siniestro .descSin {
+    grid-column: 2 / 4;
+    grid-row: 2;
+  }
+  .busqueda {
+    flex-basis: 100%;
+  }
+  .medidas > li.medida,
+  .medidas > li > .medida {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .medidas > li > .medidaElegible {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .medidas .factor {
+    grid-column: -2;
+    grid-row: 1;
+  }
+  .medidas .medidaTexto {
+    grid-column: -2;
+    grid-row: 2;
+  }
+  .casilla {
+    grid-row: 1;
+  }
+}
+
+/* ── Impresión: sólo el acta, en A4 ───────────────────────────────────── */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 12mm;
+  }
+  :global(body) {
+    background: none;
+  }
+  :global(div:has(> aside)) {
+    display: block !important;
+  }
+  :global(div:has(> aside) > aside),
+  :global(header:has(+ #contenido)),
+  :global([aria-live]:empty) {
+    display: none !important;
+  }
+  .pagina {
+    padding: 0;
+  }
+  .acta {
+    border: 0;
+    box-shadow: none;
+    max-width: none;
+  }
+  .cabeza,
+  .seccion,
+  .pieActa,
+  .cierre {
+    padding-inline: 0;
+  }
+  .cuerpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .columna + .columna {
+    border-left: 0;
+    border-top: 1px solid var(--linea);
+  }
+  .seccion,
+  .siniestro,
+  .medidas > li {
+    break-inside: avoid;
+  }
+  .h3 {
+    break-after: avoid;
+  }
+}

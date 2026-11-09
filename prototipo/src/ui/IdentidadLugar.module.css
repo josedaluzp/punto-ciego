@@ -1,0 +1,35 @@
+.signo {
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.mojon {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 36px;
+  padding: 1px 6px 2px;
+  border: 1.5px solid var(--negro);
+  border-radius: 7px 7px 2px 2px;
+  background: white;
+  color: var(--negro);
+  font-family: var(--registro);
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.05;
+}
+
+.mojon small {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+}
+
+/* Casillero de la identidad: reserva el ancho de la chapa para que el texto de
+   las listas quede alineado entre filas de ruta y de calle. */
+.identidad {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--ancho-identidad);
+}

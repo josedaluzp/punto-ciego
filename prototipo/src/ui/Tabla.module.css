@@ -1,0 +1,130 @@
+.contenedor {
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--papel);
+  font-variant-numeric: tabular-nums;
+}
+
+.tabla th {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--linea);
+  font-size: var(--t-chico);
+  font-weight: 600;
+  color: var(--tenue);
+  text-align: left;
+  white-space: nowrap;
+  background: var(--papel);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.tabla td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--linea-suave);
+  vertical-align: top;
+}
+
+.tabla .der {
+  text-align: right;
+}
+
+.ordenar {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: -4px -6px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: var(--radio);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.der .ordenar {
+  flex-direction: row-reverse;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ordenar:hover {
+    color: var(--tinta);
+    background: var(--linea-suave);
+  }
+}
+
+.flechas path {
+  fill: none;
+  stroke: var(--linea);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.flechas path.on {
+  stroke: var(--carbon);
+}
+
+.fila {
+  transition: background-color var(--dur-2) var(--ease-out);
+}
+
+.seleccionable {
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .seleccionable:hover td {
+    background: color-mix(in oklch, var(--carbon-f) 55%, transparent);
+  }
+}
+
+.seleccionable:focus-visible {
+  outline: 2px solid var(--carbon);
+  outline-offset: -2px;
+}
+
+/* El estado tiñe la fila entera. */
+.alerta td {
+  background: var(--rojo-f);
+}
+.revision td {
+  background-color: var(--ambar-f);
+  background-image: var(--rayado-revision);
+}
+.confirmado td {
+  background: var(--verde-f);
+}
+.cerrado td {
+  color: var(--tenue);
+}
+
+.sel td {
+  background: var(--carbon-f);
+  font-weight: 600;
+}
+.sel.alerta td {
+  background: color-mix(in oklch, var(--rojo-f) 60%, var(--carbon-f));
+}
+
+.pie {
+  padding: 10px;
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+@media (max-width: 640px) {
+  .ocultable {
+    display: none;
+  }
+  .tabla th,
+  .tabla td {
+    padding-inline: 8px;
+  }
+}

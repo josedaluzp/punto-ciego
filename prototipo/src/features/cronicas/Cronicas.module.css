@@ -1,0 +1,702 @@
+/*
+ * Crónicas (CU01, CU02). Tres tamaños: --t-titulo para el título de la
+ * barra (lo pone el Shell), --t-cuerpo y --t-chico acá; la jerarquía la da
+ * el peso. El estado tiñe la fila; el rojo, sólo víctimas fatales y alertas.
+ */
+
+/* ── Lista de siniestros ────────────────────────────────────────────── */
+
+.pantallaLista {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.trabajoLista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 440px);
+  flex: 1;
+  min-height: 0;
+  border-top: 1px solid var(--linea);
+}
+
+.lista {
+  min-width: 0;
+  max-height: calc(100dvh - 128px);
+  overflow: auto;
+  background: var(--papel);
+  border-right: 1px solid var(--linea);
+}
+
+.detalle {
+  min-width: 0;
+  max-height: calc(100dvh - 128px);
+  overflow: auto;
+  background: var(--papel);
+}
+
+.pieLista {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-2) var(--e-4);
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.detalleCuerpo {
+  display: grid;
+  gap: var(--e-4);
+  padding: var(--e-4) var(--e-5) var(--e-5);
+}
+
+.cerrarDetalle {
+  margin-left: auto;
+}
+
+.lugarFila {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.lugarTextos {
+  display: grid;
+  min-width: 0;
+}
+
+.lugarNombre {
+  font-weight: 650;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.lugarSub {
+  font-size: var(--t-chico);
+  line-height: 1.3;
+  color: var(--tenue);
+}
+
+.sinCorte {
+  white-space: nowrap;
+}
+
+.idFila {
+  display: grid;
+}
+
+.fechaFila {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.victimasFila {
+  display: grid;
+}
+
+.fatal {
+  color: var(--rojo-tinta);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Confianza en la fila: una línea y una barra fina; la fila queda en ~52 px. */
+.confianzaFila {
+  display: grid;
+  gap: 5px;
+  min-width: 136px;
+  padding-top: 1px;
+}
+
+.confianzaLinea {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--e-2);
+}
+
+.barraFila {
+  position: relative;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--linea-suave);
+}
+
+.rellenoSupera,
+.rellenoBajo {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 2px;
+}
+
+.rellenoSupera {
+  background: var(--verde);
+}
+
+.rellenoBajo {
+  background: var(--ambar);
+}
+
+.soloAngosto {
+  display: none;
+}
+
+.marcaUmbral {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  translate: -1px 0;
+  background: var(--tinta);
+}
+
+.subtitulo {
+  font-size: var(--t-cuerpo);
+  font-weight: 700;
+  margin-top: var(--e-2);
+}
+
+.cronicas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--e-4);
+}
+
+.cronicas li {
+  display: grid;
+  gap: var(--e-1);
+  padding-top: var(--e-3);
+  border-top: 1px solid var(--linea-suave);
+}
+
+.url {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+  overflow-wrap: anywhere;
+}
+
+.citaCronica {
+  color: var(--tinta);
+  max-width: 68ch;
+}
+
+/* ── Incorporar crónica ─────────────────────────────────────────────── */
+
+.incorporar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: var(--e-5);
+  padding: var(--e-5);
+  align-items: start;
+}
+
+.carga,
+.extraccion {
+  display: grid;
+  gap: var(--e-4);
+  min-width: 0;
+  padding: var(--e-5);
+  background: var(--papel);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-2);
+}
+
+.fieldset {
+  display: grid;
+  gap: var(--e-4);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.tituloSeccion {
+  font-size: var(--t-cuerpo);
+  font-weight: 700;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 6px;
+}
+
+.tituloSeccion:focus {
+  outline: none;
+}
+
+.tituloSeccion:focus-visible {
+  outline: 2px solid var(--carbon);
+  outline-offset: 2px;
+}
+
+.cabezaPanel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2) var(--e-3);
+}
+
+.notaPanel {
+  margin-left: auto;
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.proposito {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+  margin-top: calc(-1 * var(--e-2));
+  max-width: 68ch;
+}
+
+.dosCampos {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: var(--e-3);
+}
+
+/* Campo propio para el texto con el lugar resaltado. */
+.campo {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.etiqueta {
+  font-size: var(--t-chico);
+  font-weight: 600;
+  color: var(--tenue);
+}
+
+.textoCronica {
+  position: relative;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--papel);
+  transition: border-color var(--dur-2) var(--ease-out);
+}
+
+.textoCronica:focus-within {
+  outline: 2px solid var(--carbon);
+  border-color: var(--carbon);
+}
+
+.textoCronica:has(textarea[aria-invalid='true']) {
+  border-color: var(--rojo);
+}
+
+.capaResaltado,
+.areaCronica {
+  margin: 0;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: var(--t-cuerpo);
+  line-height: 1.6;
+  letter-spacing: normal;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.capaResaltado {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  color: transparent;
+  pointer-events: none;
+  /* el textarea reserva el carril de la barra de desplazamiento */
+  scrollbar-gutter: stable;
+}
+
+.capaResaltado mark {
+  color: transparent;
+  background: var(--carbon-f-2);
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px var(--carbon-f-2);
+}
+
+.areaCronica {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  border: 0;
+  background: transparent;
+  color: var(--tinta);
+  outline: none;
+  scrollbar-gutter: stable;
+}
+
+.areaCronica::placeholder {
+  color: var(--tenue);
+}
+
+.ayuda {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.error {
+  font-size: var(--t-chico);
+  color: var(--rojo-tinta);
+}
+
+/* Lo extraído */
+.datos {
+  margin: 0;
+  display: grid;
+  border-top: 1px solid var(--linea-suave);
+}
+
+.dato {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: var(--e-3);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--linea-suave);
+  align-items: start;
+}
+
+.dato dt {
+  color: var(--tenue);
+  padding-top: 2px;
+}
+
+.dato dd {
+  margin: 0;
+  min-width: 0;
+}
+
+.campoCompacto {
+  max-width: 280px;
+}
+
+.campoCompacto label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.campoLugar {
+  display: grid;
+  gap: 6px;
+}
+
+.entradaLugar {
+  width: 100%;
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--papel);
+  font-weight: 600;
+}
+
+.entradaLugar:focus-visible {
+  outline: 2px solid var(--carbon);
+  border-color: var(--carbon);
+}
+
+.entradaLugar[aria-invalid='true'] {
+  border-color: var(--rojo);
+}
+
+.lecturaLugar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+.enlaceBoton {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--carbon);
+  font-size: var(--t-chico);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.victimas {
+  display: grid;
+  gap: var(--e-2);
+  justify-items: start;
+}
+
+.listaVictimas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--e-2);
+  width: 100%;
+}
+
+.victima {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto auto;
+  gap: var(--e-2);
+  align-items: center;
+}
+
+.duplicado {
+  display: grid;
+  gap: var(--e-2);
+  margin: 0;
+  padding: var(--e-3);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  min-width: 0;
+}
+
+.duplicado[data-nivel='seguro'] {
+  background: var(--carbon-f);
+  border-color: var(--carbon-f-2);
+}
+
+.duplicado[data-nivel='dudoso'] {
+  background-color: var(--ambar-f);
+  background-image: var(--rayado-revision);
+  border-color: color-mix(in oklch, var(--ambar) 40%, transparent);
+}
+
+.duplicado legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+
+.candidato {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.opcion {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  cursor: pointer;
+}
+
+.opcion input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.barraAccion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-3) var(--e-4);
+  padding-top: var(--e-2);
+}
+
+.notaAccion {
+  color: var(--tenue);
+  font-size: var(--t-chico);
+}
+
+.enlace {
+  font-weight: 600;
+}
+
+/* Resultado de la georreferenciación */
+.resultado {
+  display: grid;
+  gap: var(--e-4);
+  animation: aparecer var(--dur-3) var(--ease-out);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.lugarResultado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2) 10px;
+}
+
+.tenue {
+  color: var(--tenue);
+}
+
+.aviso {
+  display: flex;
+  gap: var(--e-2);
+  align-items: flex-start;
+  padding: 10px var(--e-3);
+  border-radius: var(--radio);
+  background: var(--papel-2);
+  border: 1px solid var(--linea-suave);
+}
+
+.aviso > svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.aviso p + p {
+  margin-top: var(--e-1);
+}
+
+.avisoConfirmado {
+  background: var(--verde-f);
+  border-color: color-mix(in oklch, var(--verde) 30%, transparent);
+  color: var(--verde-tinta);
+}
+
+.avisoRevision {
+  background-color: var(--ambar-f);
+  background-image: var(--rayado-revision);
+  border-color: color-mix(in oklch, var(--ambar) 40%, transparent);
+  color: var(--ambar-tinta);
+}
+
+.avisoRevision a,
+.avisoConfirmado a {
+  color: inherit;
+  font-weight: 650;
+}
+
+.avisoAlerta {
+  background: var(--rojo-f);
+  border-color: color-mix(in oklch, var(--rojo) 35%, transparent);
+  color: var(--rojo-tinta);
+}
+
+.avisoAlerta a {
+  color: var(--rojo-tinta);
+  font-weight: 650;
+}
+
+.mapa {
+  height: 280px;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  overflow: hidden;
+  background: var(--papel-2);
+}
+
+.croquis {
+  margin: 0;
+  display: grid;
+  gap: var(--e-2);
+  min-width: 0;
+}
+
+.croquisTitulo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  align-items: baseline;
+}
+
+.croquisTitulo span {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.notaRuta {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+  max-width: 68ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resultado {
+    animation: none;
+  }
+}
+
+/* ── Pantallas medianas y angostas ──────────────────────────────────── */
+
+@media (max-width: 1180px) {
+  .trabajoLista {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+  }
+  .incorporar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .trabajoLista {
+    display: flex;
+    flex-direction: column;
+  }
+  .lista,
+  .detalle {
+    max-height: none;
+    overflow: visible;
+    border-right: 0;
+  }
+  .detalle {
+    display: none;
+    order: -1;
+    border-bottom: 1px solid var(--linea);
+  }
+  .detalleAbierto {
+    display: block;
+  }
+  .incorporar {
+    padding: var(--e-3);
+    gap: var(--e-3);
+  }
+  .carga,
+  .extraccion {
+    padding: var(--e-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .dosCampos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dato {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--e-1);
+  }
+  .victima {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .notaPanel {
+    margin-left: 0;
+  }
+  .detalleCuerpo {
+    padding: var(--e-3) var(--e-4) var(--e-4);
+  }
+  /* En el teléfono la fila muestra sólo la cifra y la barra; el método queda en el detalle. */
+  .confianzaFila {
+    min-width: 52px;
+  }
+  .confianzaLinea {
+    justify-content: flex-end;
+  }
+  .confianzaLinea > .lugarSub,
+  .soloAncho {
+    display: none;
+  }
+  .soloAngosto {
+    display: inline;
+  }
+  .mapa {
+    height: 240px;
+  }
+}

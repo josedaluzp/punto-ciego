@@ -1,0 +1,364 @@
+.shell {
+  display: grid;
+  grid-template-columns: 212px minmax(0, 1fr);
+  min-height: 100dvh;
+}
+
+/* ── Riel ─────────────────────────────────────────────────────────────── */
+.riel {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--riel);
+  color: var(--riel-texto);
+  padding: 18px 14px;
+  overflow-y: auto;
+  scrollbar-color: var(--riel-activo) transparent;
+}
+
+.cabezaRiel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-2);
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  border-radius: var(--radio);
+  color: white;
+  font-weight: 750;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.marca:focus-visible,
+.entrada:focus-visible,
+.vecino:focus-visible,
+.restablecer:focus-visible,
+.botonMenu:focus-visible {
+  outline-color: var(--riel-aviso);
+}
+
+.botonMenu,
+.sinteticoPlegado {
+  display: none;
+}
+
+.cuerpoRiel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 22px;
+}
+
+.nav {
+  display: grid;
+  gap: 18px;
+}
+
+.paquete ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 2px;
+}
+
+.nombrePaquete {
+  font-family: var(--ui);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-chico);
+  color: var(--riel-tenue);
+  padding: 0 8px;
+  margin-bottom: 4px;
+}
+
+.entrada {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--e-2);
+  padding: 7px 8px;
+  border-radius: var(--radio-2);
+  color: inherit;
+  font-size: var(--t-cuerpo);
+  text-decoration: none;
+  transition: background-color var(--dur-2) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .entrada:hover {
+    background: var(--riel-hover);
+  }
+}
+
+.activa,
+.activa:hover {
+  background: var(--riel-activo);
+  color: white;
+  font-weight: 600;
+}
+
+.cantidad {
+  font-family: var(--registro);
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.pieRiel {
+  margin-top: auto;
+  display: grid;
+  gap: 10px;
+}
+
+.vecino {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-2);
+  padding: 7px 8px;
+  border-radius: var(--radio-2);
+  color: var(--riel-texto);
+  font-size: var(--t-chico);
+  text-decoration: none;
+  border: 1px solid oklch(0.4 0.05 264);
+}
+
+.restablecer {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-2);
+  padding: 7px 8px;
+  border: 0;
+  border-radius: var(--radio-2);
+  background: transparent;
+  color: var(--riel-tenue);
+  font-size: var(--t-chico);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-2) var(--ease-out),
+    color var(--dur-2) var(--ease-out),
+    transform var(--dur-1) var(--ease-out);
+}
+
+.restablecer:active:not(:focus-visible),
+.vecino:active:not(:focus-visible) {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .restablecer:hover,
+  .vecino:hover {
+    background: var(--riel-hover);
+    color: white;
+  }
+}
+
+/* ── Barra y contenido ───────────────────────────────────────────────── */
+.principal {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.barra {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--e-2) var(--e-4);
+  padding: 12px 20px;
+  background: var(--papel);
+  border-bottom: 1px solid var(--linea);
+  min-height: 60px;
+}
+
+.titulos {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px var(--e-3);
+  min-width: 0;
+}
+
+.titulo {
+  font-size: var(--t-titulo);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.cu {
+  font-family: var(--ui);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.acciones {
+  display: flex;
+  gap: var(--e-2);
+  margin-left: auto;
+}
+
+.usuario {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.acciones + .usuario {
+  margin-left: 0;
+}
+
+.iconoUsuario {
+  position: absolute;
+  left: 8px;
+  color: var(--tenue);
+  pointer-events: none;
+}
+
+.selectUsuario {
+  appearance: none;
+  max-width: 100%;
+  min-height: 34px;
+  padding: 6px 10px 6px 30px;
+  border: 1px solid transparent;
+  border-radius: var(--radio-2);
+  background: transparent;
+  color: var(--tenue);
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-2) var(--ease-out),
+    background-color var(--dur-2) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .selectUsuario:hover {
+    border-color: var(--linea);
+    color: var(--tinta);
+  }
+}
+
+.selectUsuario:focus-visible {
+  outline-offset: 0;
+}
+
+.contenido {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ── Pantallas angostas: el riel se pliega ───────────────────────────── */
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+    /* El riel no se estira cuando la pantalla tiene poco contenido. */
+    grid-template-rows: auto 1fr;
+  }
+  .riel {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: auto;
+    max-height: 100dvh;
+    padding: 10px var(--e-4);
+  }
+  .botonMenu {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    padding: 6px 10px;
+    border: 1px solid oklch(0.4 0.05 264);
+    border-radius: var(--radio-2);
+    background: transparent;
+    color: var(--riel-texto);
+    font-size: var(--t-chico);
+    cursor: pointer;
+  }
+  .sinteticoPlegado {
+    display: inline;
+    margin-left: auto;
+    padding: 2px 6px;
+    border: 1px dashed var(--riel-aviso-borde);
+    border-radius: var(--radio);
+    color: var(--riel-aviso);
+    font-size: var(--t-chico);
+    white-space: nowrap;
+  }
+  .cuerpoRiel {
+    display: none;
+    margin-top: 14px;
+    padding-bottom: 6px;
+  }
+  .cuerpoRiel.abierto {
+    display: flex;
+  }
+  .barra {
+    padding: 10px var(--e-4);
+  }
+  .usuario {
+    margin-left: 0;
+    width: 100%;
+  }
+  .selectUsuario {
+    width: 100%;
+    border-color: var(--linea);
+  }
+}
+
+/* ── Cara pública ────────────────────────────────────────────────────── */
+.publico {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.barraPublica {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--e-3);
+  padding: 12px var(--e-4);
+  background: var(--papel);
+  border-bottom: 1px solid var(--linea);
+}
+
+.marcaPublica {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 750;
+}
+
+.areaPublica {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.columnaPublica {
+  flex: 1;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: var(--e-4);
+}
+
+.piePublico {
+  position: sticky;
+  bottom: 0;
+}

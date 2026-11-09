@@ -1,0 +1,97 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radio);
+  font-size: var(--t-chico);
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.neutro {
+  background: var(--linea-suave);
+  color: var(--tinta);
+}
+.carbon {
+  background: var(--carbon-f);
+  color: var(--carbon);
+}
+.rojo {
+  background: var(--rojo-f);
+  color: var(--rojo-tinta);
+}
+.ambar {
+  background: var(--ambar-f);
+  color: var(--ambar-tinta);
+}
+.verde {
+  background: var(--verde-f);
+  color: var(--verde-tinta);
+}
+.tenue {
+  background: transparent;
+  color: var(--tenue);
+  padding-inline: 0;
+  font-weight: 500;
+}
+
+.registroTenue {
+  color: var(--tenue);
+}
+
+.vacio {
+  display: grid;
+  gap: var(--e-2);
+  max-width: 62ch;
+  padding: var(--e-6) var(--e-5);
+}
+
+.vacioTitulo {
+  font-weight: 700;
+  font-size: var(--t-cuerpo);
+}
+
+.vacioTexto {
+  color: var(--tenue);
+  display: grid;
+  gap: var(--e-2);
+}
+
+.vacioAccion {
+  margin-top: var(--e-2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+}
+
+.aviso {
+  font-family: var(--ui);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-chico);
+  line-height: 1.35;
+  border-radius: var(--radio);
+}
+
+.aviso-riel {
+  border: 1px dashed var(--riel-aviso-borde);
+  color: var(--riel-aviso);
+  padding: 8px;
+}
+
+.aviso-papel {
+  display: inline-block;
+  border: 1px dashed var(--ambar);
+  color: var(--ambar-tinta);
+  background: var(--ambar-f);
+  padding: 3px 8px;
+}
+
+.aviso-banda {
+  border-radius: 0;
+  text-align: center;
+  color: var(--ambar-tinta);
+  background: var(--ambar-f);
+  border-top: 1px dashed var(--ambar);
+  padding: 8px var(--e-4);
+}

@@ -1,0 +1,52 @@
+.medidor {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.cifras {
+  display: flex;
+  align-items: baseline;
+  gap: var(--e-2);
+}
+
+.valor {
+  font-family: var(--ui);
+  font-variant-numeric: tabular-nums;
+}
+
+.umbral {
+  color: var(--tenue);
+  font-size: var(--t-chico);
+}
+
+.barra {
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--linea-suave);
+}
+
+.relleno {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 4px;
+}
+
+.supera {
+  background: var(--verde);
+}
+
+.bajo {
+  background: var(--ambar);
+  background-image: var(--rayado-revision);
+}
+
+.marca {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  translate: -1px 0;
+  background: var(--tinta);
+}

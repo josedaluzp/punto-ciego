@@ -1,0 +1,499 @@
+/*
+ * Cara pública del reclamo (CU08): una columna para el teléfono, a una mano y
+ * al aire libre. Letra de 16 px en los campos (el teléfono no acerca la página
+ * al enfocarlos), objetivos táctiles de 44 px, un solo botón principal por paso.
+ */
+.pagina {
+  --t-pub-titulo: 22px;
+  --t-pub-cuerpo: 16px;
+  --t-pub-chico: 13.5px;
+  font-size: var(--t-pub-cuerpo);
+  display: grid;
+  gap: var(--e-5);
+  padding-bottom: var(--e-5);
+}
+
+.pagina :is(input, textarea, select) {
+  font-size: 16px;
+}
+
+.pagina :is(input:not([type='checkbox']), textarea) {
+  min-height: 44px;
+}
+
+.cabecera {
+  display: grid;
+  gap: var(--e-1);
+}
+
+.h1 {
+  font-size: var(--t-pub-titulo);
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.sub {
+  color: var(--tenue);
+  font-size: var(--t-pub-chico);
+}
+
+.pasos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--e-2);
+  margin: var(--e-3) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--t-pub-chico);
+  font-weight: 600;
+  color: var(--tenue);
+}
+
+.pasos li {
+  padding-top: 6px;
+  border-top: 3px solid var(--linea);
+}
+
+.pasos li[aria-current='step'] {
+  color: var(--carbon);
+  border-top-color: var(--carbon);
+}
+
+/* El paso entra con un desplazamiento corto, sólo si se llegó con el puntero. */
+.paso {
+  min-width: 0;
+}
+
+.entra {
+  animation: entrar var(--dur-3) var(--ease-out);
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.seccion {
+  display: grid;
+  gap: var(--e-3);
+  min-width: 0;
+}
+
+.h2 {
+  font-size: var(--t-pub-cuerpo);
+  font-weight: 750;
+}
+
+.h2:focus,
+.etiquetaNumero:focus {
+  outline: none;
+}
+
+.h2:focus-visible,
+.etiquetaNumero:focus-visible {
+  outline: 2px solid var(--carbon);
+  outline-offset: 3px;
+}
+
+.h3 {
+  margin-top: var(--e-3);
+  font-size: var(--t-pub-cuerpo);
+  font-weight: 750;
+}
+
+.indicacion,
+.tenue {
+  color: var(--tenue);
+}
+
+.indicacion {
+  font-size: var(--t-pub-chico);
+}
+
+/* ── Mapa ── */
+
+.marcoMapa {
+  height: min(52dvh, 340px);
+  min-height: 260px;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-2);
+  overflow: hidden;
+  background: var(--papel);
+}
+
+.marcoError {
+  border-color: var(--rojo);
+  box-shadow: 0 0 0 1px var(--rojo);
+}
+
+.mapa {
+  min-height: 0;
+}
+
+.lugarElegido,
+.resumenLugar {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--e-3);
+  min-height: 44px;
+}
+
+.lugarElegido p,
+.resumenLugar p {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.ayudaLugar {
+  display: block;
+  color: var(--tenue);
+  font-size: var(--t-pub-chico);
+}
+
+.resumenLugar {
+  padding: var(--e-2) var(--e-3);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-2);
+  background: var(--papel);
+}
+
+.resumenLugar {
+  align-items: center;
+}
+
+.resumenLugar button {
+  min-height: 44px;
+}
+
+.lugarElegido > :first-child {
+  margin-top: -4px;
+}
+
+.error,
+.errorCampo {
+  color: var(--rojo-tinta);
+  font-size: var(--t-pub-chico);
+  font-weight: 600;
+}
+
+.error {
+  display: flex;
+  gap: var(--e-2);
+  align-items: flex-start;
+}
+
+.error svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.error:focus {
+  outline: none;
+}
+
+.error:focus-visible {
+  outline: 2px solid var(--carbon);
+  outline-offset: 2px;
+}
+
+/* ── Dirección escrita ── */
+
+.direccion {
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-2);
+  background: var(--papel);
+}
+
+.direccion summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--e-3);
+  color: var(--carbon);
+  font-weight: 650;
+  font-size: var(--t-pub-chico);
+  cursor: pointer;
+  list-style-position: inside;
+}
+
+.direccion summary:focus-visible {
+  outline: 2px solid var(--carbon);
+  outline-offset: -2px;
+}
+
+.camposDireccion {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--e-3);
+  padding: 0 var(--e-3) var(--e-3);
+  align-items: start;
+}
+
+.camposDireccion > :first-child {
+  min-width: 0;
+}
+
+.campoAltura {
+  min-width: 0;
+}
+
+.botonUbicar {
+  grid-column: 1 / -1;
+  min-height: 44px;
+}
+
+.notaServicio {
+  grid-column: 1 / -1;
+  color: var(--tenue);
+  font-size: var(--t-pub-chico);
+}
+
+@media (min-width: 480px) {
+  .camposDireccion {
+    grid-template-columns: minmax(0, 1fr) 8rem;
+  }
+}
+
+/* ── Paso 2 ── */
+
+.formulario {
+  display: grid;
+  gap: var(--e-5);
+}
+
+.contador {
+  font-variant-numeric: tabular-nums;
+}
+
+.etiqueta {
+  font-size: var(--t-pub-chico);
+  font-weight: 600;
+  color: var(--tenue);
+}
+
+.foto,
+.control {
+  display: grid;
+  gap: 6px;
+}
+
+.elegirFoto {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-2);
+  min-height: 44px;
+  padding: 0 var(--e-4);
+  border: 1px dashed var(--carbon);
+  border-radius: var(--radio-2);
+  background: var(--papel);
+  color: var(--carbon);
+  font-weight: 650;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-1) var(--ease-out), background-color var(--dur-2) var(--ease-out);
+}
+
+.pagina .elegirFoto {
+  font-size: var(--t-pub-cuerpo);
+}
+
+.elegirFoto:focus-within {
+  outline: 2px solid var(--carbon);
+  outline-offset: 2px;
+}
+
+.elegirFoto:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .elegirFoto:hover {
+    background: var(--carbon-f);
+  }
+}
+
+.vistaFoto {
+  display: flex;
+  gap: var(--e-3);
+  align-items: flex-start;
+}
+
+.miniatura {
+  width: 112px;
+  height: 84px;
+  object-fit: cover;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--papel-2);
+}
+
+.accionesFoto {
+  display: grid;
+  gap: var(--e-1);
+  justify-items: start;
+  font-size: var(--t-pub-chico);
+}
+
+.accionesFoto button {
+  min-height: 44px;
+  margin-left: -10px;
+}
+
+.ayuda {
+  color: var(--tenue);
+  font-size: var(--t-pub-chico);
+}
+
+.casilla {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  min-height: 44px;
+  padding: 0 var(--e-3);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-2);
+  background: var(--papel);
+  cursor: pointer;
+}
+
+.pagina .casilla {
+  font-size: var(--t-pub-cuerpo);
+}
+
+.casilla input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  flex: none;
+}
+
+.casilla:has(input[aria-invalid='true']) {
+  border-color: var(--rojo);
+}
+
+.casilla:focus-within {
+  outline: 2px solid var(--carbon);
+  outline-offset: 2px;
+}
+
+.privacidad {
+  display: flex;
+  gap: var(--e-2);
+  align-items: flex-start;
+  color: var(--tenue);
+  font-size: var(--t-pub-chico);
+}
+
+.privacidad svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--verde);
+}
+
+.principal {
+  min-height: 48px;
+  font-size: var(--t-pub-cuerpo);
+}
+
+/* ── Comprobante ── */
+
+.constancia {
+  display: grid;
+  justify-items: center;
+  gap: var(--e-1);
+  padding: var(--e-5) var(--e-4);
+  border: 1px solid var(--verde);
+  border-radius: var(--radio-2);
+  background: var(--verde-f);
+  text-align: center;
+}
+
+.etiquetaNumero {
+  font-size: var(--t-pub-chico);
+  font-weight: 700;
+  color: var(--verde-tinta);
+}
+
+.numero {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  overflow-wrap: anywhere;
+}
+
+.numero :global(.registro) {
+  font-weight: 700;
+}
+
+.fechaHora {
+  color: var(--tinta);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-pub-chico);
+}
+
+.datos {
+  display: grid;
+  gap: var(--e-3);
+  margin: 0;
+}
+
+.datos > div {
+  display: grid;
+  gap: 2px;
+  padding-bottom: var(--e-3);
+  border-bottom: 1px solid var(--linea-suave);
+}
+
+.datos dt {
+  font-size: var(--t-pub-chico);
+  font-weight: 600;
+  color: var(--tenue);
+}
+
+.datos dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.lugarComprobante {
+  display: flex;
+  gap: var(--e-2);
+  align-items: center;
+}
+
+.descripcion {
+  white-space: pre-line;
+}
+
+.despues {
+  display: grid;
+  gap: var(--e-2);
+  margin: 0;
+  padding-left: 1.3em;
+}
+
+.despues li::marker {
+  color: var(--carbon);
+  font-weight: 700;
+}
+
+.enlaceDemo {
+  justify-self: center;
+  min-height: 44px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entra {
+    animation: none;
+  }
+  .elegirFoto:active {
+    transform: none;
+  }
+}

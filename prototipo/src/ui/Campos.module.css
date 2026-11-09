@@ -1,0 +1,121 @@
+.campo {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.enLinea {
+  grid-auto-flow: column;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+.etiqueta {
+  font-size: var(--t-chico);
+  font-weight: 600;
+  color: var(--tenue);
+}
+
+.envoltorioSelect {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.select,
+.entrada {
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--papel);
+  color: var(--tinta);
+  font-size: var(--t-cuerpo);
+  transition: border-color var(--dur-2) var(--ease-out);
+}
+
+.select {
+  appearance: none;
+  padding: 6px 30px 6px 10px;
+  cursor: pointer;
+}
+
+.flecha {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  translate: 0 -50%;
+  color: var(--tenue);
+  pointer-events: none;
+}
+
+.entrada {
+  padding: 8px 10px;
+}
+
+.area {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.entrada::placeholder {
+  color: var(--tenue);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .select:hover,
+  .entrada:hover {
+    border-color: var(--tenue);
+  }
+}
+
+.select:focus-visible,
+.entrada:focus-visible {
+  outline: 2px solid var(--carbon);
+  outline-offset: 0;
+  border-color: var(--carbon);
+}
+
+.entrada[aria-invalid='true'] {
+  border-color: var(--rojo);
+}
+
+.ayuda,
+.error {
+  font-size: var(--t-chico);
+}
+
+.ayuda {
+  color: var(--tenue);
+}
+
+.error {
+  color: var(--rojo-tinta);
+}
+
+.filaFiltros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2) var(--e-3);
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--linea);
+  background: color-mix(in oklch, var(--papel) 88%, transparent);
+}
+
+.conteo {
+  margin-left: auto;
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+@media (max-width: 640px) {
+  .filaFiltros {
+    padding-inline: var(--e-4);
+  }
+  .conteo {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+}

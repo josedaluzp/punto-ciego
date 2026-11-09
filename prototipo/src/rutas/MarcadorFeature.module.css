@@ -1,0 +1,57 @@
+.marcador {
+  display: grid;
+  gap: var(--e-4);
+  max-width: 72ch;
+  margin: var(--e-6) var(--e-5);
+  padding: var(--e-5);
+  border: 1px dashed var(--linea);
+  border-radius: var(--radio-2);
+  background: var(--papel);
+}
+
+.titulo {
+  font-size: var(--t-cuerpo);
+  font-weight: 700;
+}
+
+.casos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 4px;
+}
+
+.texto {
+  color: var(--tenue);
+  max-width: 68ch;
+}
+
+.ficha {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px var(--e-4);
+  margin: 0;
+  font-size: var(--t-chico);
+}
+
+.ficha dt {
+  color: var(--tenue);
+}
+
+.ficha dd {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .marcador {
+    margin: var(--e-4);
+    padding: var(--e-4);
+  }
+  .ficha {
+    grid-template-columns: 1fr;
+  }
+  .ficha dd {
+    margin-bottom: 6px;
+  }
+}

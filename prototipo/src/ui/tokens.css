@@ -1,0 +1,92 @@
+/*
+ * Tokens de diseño de Punto Ciego. Uso: --carbon para acción y selección;
+ * --rojo sólo para fallecidos y alertas; --ambar (y --rayado-revision) para lo
+ * que espera revisión; --verde para lo confirmado. --registro (Courier Prime)
+ * sólo para números de registro y progresivas.
+ */
+:root {
+  color-scheme: light;
+
+  /* Papel y tinta */
+  --papel: oklch(0.993 0.002 250);
+  --papel-2: oklch(0.975 0.005 255);
+  --grilla: oklch(0.93 0.012 250);
+  --tinta: oklch(0.25 0.03 262);
+  --tenue: oklch(0.47 0.02 262);
+  --linea: oklch(0.86 0.015 262);
+  --linea-suave: oklch(0.93 0.008 262);
+
+  /* Acción y selección */
+  --carbon: oklch(0.4 0.14 264);
+  --carbon-oscuro: oklch(0.34 0.13 264);
+  --carbon-f: oklch(0.95 0.025 264);
+  --carbon-f-2: oklch(0.91 0.04 264);
+
+  /* Estados */
+  --rojo: oklch(0.53 0.19 27);
+  --rojo-tinta: oklch(0.47 0.17 27);
+  --rojo-f: oklch(0.955 0.03 27);
+  --ambar: oklch(0.6 0.13 70);
+  --ambar-tinta: oklch(0.45 0.1 65);
+  --ambar-f: oklch(0.955 0.045 85);
+  --verde: oklch(0.5 0.11 155);
+  --verde-tinta: oklch(0.42 0.1 155);
+  --verde-f: oklch(0.955 0.035 155);
+
+  /* Señalización vial (identidad de lugar, tomada de la dirección B) */
+  --amarillo: oklch(0.87 0.17 93);
+  --negro: oklch(0.2 0.01 260);
+  --azul-calle: oklch(0.43 0.15 256);
+
+  /* Riel */
+  --riel: oklch(0.27 0.045 264);
+  --riel-activo: oklch(0.36 0.08 264);
+  --riel-hover: oklch(0.31 0.06 264);
+  --riel-texto: oklch(0.93 0.02 264);
+  --riel-tenue: oklch(0.74 0.04 264);
+  --riel-aviso: oklch(0.86 0.09 85);
+  --riel-aviso-borde: oklch(0.62 0.08 80);
+
+  /* Mapa */
+  --mapa-vecina: oklch(0.965 0.006 262);
+  --mapa-ruta: oklch(0.56 0.03 262);
+  --mapa-calle-a: oklch(0.64 0.012 262);
+  --mapa-calle-b: oklch(0.79 0.008 262);
+  --mapa-calle-c: oklch(0.88 0.006 262);
+
+  /* Letra: tres tamaños por pantalla; la jerarquía la da el peso */
+  --ui: 'Archivo', system-ui, sans-serif;
+  --registro: 'Courier Prime', ui-monospace, monospace;
+  --t-titulo: 19px;
+  --t-cuerpo: 14px;
+  --t-chico: 12.5px;
+  --t-grande: 28px;
+
+  /* Espacio (módulo de la grilla: 24 px) */
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 24px;
+  --e-6: 32px;
+  --modulo: 24px;
+  --radio: 3px;
+  --radio-2: 4px;
+
+  /* Movimiento (Emil Kowalski): nítido, salida rápida */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-1: 140ms;
+  --dur-2: 180ms;
+  --dur-3: 220ms;
+
+  --sombra-flotante: 0 6px 18px -6px oklch(0.25 0.03 262 / 0.28), 0 1px 3px oklch(0.25 0.03 262 / 0.12);
+  --rayado-revision: repeating-linear-gradient(135deg, oklch(0.6 0.13 70 / 0.13) 0 6px, transparent 6px 12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+  }
+}

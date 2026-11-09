@@ -1,0 +1,410 @@
+/* Lugares priorizados (Figura 17): mapa a la izquierda, lista y lugar a la derecha. */
+
+.periodo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+.trabajo {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.82fr) minmax(0, 1.18fr);
+  grid-template-rows: minmax(0, auto) auto;
+  grid-template-areas:
+    'mapa lista'
+    'mapa panel';
+  border-bottom: 1px solid var(--linea);
+}
+
+/* ── Lista ─────────────────────────────────────────────────────────────── */
+.lista {
+  grid-area: lista;
+  min-width: 0;
+  border-bottom: 1px solid var(--linea);
+}
+
+/* El contenedor de la tabla es el que desplaza, así el encabezado queda fijo. */
+.lista > div {
+  max-height: 318px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--linea) transparent;
+}
+
+.rango {
+  font-variant-numeric: tabular-nums;
+  color: var(--tenue);
+}
+
+.lugar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.lugarTexto {
+  min-width: 0;
+  flex: 1;
+}
+
+.lugarNombre {
+  font-weight: 650;
+}
+
+.lugarSub {
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.mojon {
+  flex: none;
+}
+
+/* ── Lugar seleccionado ────────────────────────────────────────────────── */
+.panel {
+  grid-area: panel;
+  min-width: 0;
+  background: var(--papel);
+}
+
+.panelCabecera {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  padding: var(--e-3) var(--e-4);
+  border-bottom: 1px solid var(--linea-suave);
+}
+
+.panelTitulo {
+  flex: 1;
+  min-width: 0;
+}
+
+.h2 {
+  font-size: var(--t-titulo);
+  font-weight: 700;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.panelCuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 260px);
+}
+
+.croquis {
+  min-width: 0;
+  padding: var(--e-3) var(--e-4);
+  border-right: 1px solid var(--linea-suave);
+}
+
+.siniestros {
+  margin: var(--e-2) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--t-chico);
+}
+
+.siniestro {
+  display: grid;
+  grid-template-columns: 20px 62px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--e-2);
+  padding: 3px 0;
+  border-top: 1px solid var(--linea-suave);
+}
+
+.numero {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--tinta);
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  align-self: center;
+}
+
+.numero[data-fatal] {
+  border-color: var(--rojo);
+  background: var(--rojo);
+  color: white;
+}
+
+.siniestroTexto {
+  min-width: 0;
+}
+
+.tenue {
+  color: var(--tenue);
+}
+
+.datos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-3);
+  padding: var(--e-3) var(--e-4);
+  min-width: 0;
+}
+
+.resumen {
+  display: grid;
+  gap: 2px;
+  font-size: var(--t-chico);
+}
+
+.resumen b {
+  font-size: var(--t-cuerpo);
+}
+
+.kv {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 12px;
+  margin: 0;
+  font-size: var(--t-chico);
+}
+
+.kv dt {
+  color: var(--tenue);
+}
+
+.kv dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.predominante {
+  font-size: var(--t-chico);
+}
+
+.formula {
+  font-size: var(--t-chico);
+  border-top: 1px solid var(--linea-suave);
+  padding-top: var(--e-2);
+}
+
+.formula summary {
+  cursor: pointer;
+  color: var(--carbon);
+  font-weight: 600;
+  border-radius: var(--radio);
+  width: fit-content;
+  text-underline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .formula summary:hover {
+    text-decoration: underline;
+  }
+}
+
+.formula summary:focus-visible {
+  outline: 2px solid var(--carbon);
+  outline-offset: 2px;
+}
+
+.formulaLinea {
+  margin-top: var(--e-2);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.45;
+}
+
+.formulaNotas {
+  margin: var(--e-2) 0 0;
+  padding-left: 1.1em;
+  color: var(--tenue);
+  display: grid;
+  gap: 2px;
+}
+
+.accion {
+  margin-top: auto;
+  display: grid;
+  gap: var(--e-2);
+  font-size: var(--t-chico);
+}
+
+/* ── Mapa ──────────────────────────────────────────────────────────────── */
+.mapa {
+  grid-area: mapa;
+  position: relative;
+  min-width: 0;
+  min-height: 600px;
+  border-right: 1px solid var(--linea);
+  background: var(--papel-2);
+}
+
+.mapaLienzo {
+  position: absolute;
+  inset: 0;
+}
+
+.alternarMapa {
+  display: none;
+}
+
+.leyenda {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 3px;
+}
+
+.leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.leyendaNota {
+  color: var(--tenue);
+}
+
+/* ── CU04 ──────────────────────────────────────────────────────────────── */
+.actualizacion {
+  display: flex;
+  font-variant-numeric: tabular-nums;
+  align-items: flex-start;
+  gap: var(--e-3);
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--linea);
+  background: var(--carbon-f);
+  font-size: var(--t-chico);
+}
+
+.actualizacionTexto {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.actualizacionTexto b {
+  font-weight: 650;
+}
+
+.cambios {
+  margin: 4px 0 0;
+  padding-left: 1.1em;
+  display: grid;
+  gap: 1px;
+}
+
+.cerrar {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: var(--radio);
+  background: transparent;
+  color: var(--tenue);
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cerrar:hover {
+    background: var(--carbon-f-2);
+    color: var(--tinta);
+  }
+}
+
+.cerrar:focus-visible {
+  outline: 2px solid var(--carbon);
+  outline-offset: 1px;
+}
+
+.calculo {
+  padding: 8px 20px;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-chico);
+  color: var(--tenue);
+}
+
+.vacio {
+  padding: var(--e-5) 20px;
+}
+
+/* ── Angosto: lista primero, después el lugar y el mapa plegable ───────── */
+@media (max-width: 1100px) {
+  .trabajo {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'lista'
+      'panel'
+      'mapa';
+  }
+
+  .mapa {
+    min-height: 0;
+    border-right: 0;
+    border-top: 1px solid var(--linea);
+  }
+
+  .mapaLienzo {
+    position: relative;
+    height: 460px;
+  }
+}
+
+@media (max-width: 720px) {
+  .mojon {
+    display: none;
+  }
+
+  .lista > div {
+    max-height: 360px;
+  }
+
+  .panelCabecera {
+    flex-wrap: wrap;
+    padding-inline: var(--e-4);
+  }
+
+  .panelCuerpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .croquis {
+    border-right: 0;
+    border-bottom: 1px solid var(--linea-suave);
+  }
+
+  .alternarMapa {
+    display: block;
+    width: 100%;
+    padding: 12px var(--e-4);
+    border: 0;
+    background: var(--papel);
+    color: var(--carbon);
+    font: inherit;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .alternarMapa:focus-visible {
+    outline: 2px solid var(--carbon);
+    outline-offset: -2px;
+  }
+
+  .mapa:not([data-abierto]) .mapaLienzo {
+    display: none;
+  }
+
+  .mapaLienzo {
+    height: 380px;
+  }
+
+  .actualizacion,
+  .calculo {
+    padding-inline: var(--e-4);
+  }
+}
