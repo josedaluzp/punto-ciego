@@ -95,6 +95,8 @@ const CAJA_BASE: Record<Plano, Caja> = {
 };
 const ACERCAMIENTO_MAX: Record<Plano, number> = { provincia: 14, ciudad: 8 };
 const FACTOR_ZOOM = 1.6;
+/** Radio mínimo, en píxeles de pantalla, del área que recibe el toque de un marcador interactivo. */
+const RADIO_TOQUE = 12.5;
 /** Paso del teclado al mover un marcador, en metros. */
 const PASO_TECLADO: Record<Plano, number> = { provincia: 1000, ciudad: 20 };
 
@@ -505,6 +507,8 @@ function MarcadorSvg({ m, x, y, k, angulo, largo, seleccionado, arrastrando, int
       onKeyDown={interactivo ? onKeyDown : undefined}
       data-marcador={m.id}
     >
+      {/* Área de toque transparente de 25 px de lado como mínimo (WCAG 2.5.8): no cambia el dibujo. */}
+      {interactivo && <circle r={Math.max(anillo, RADIO_TOQUE * k)} className={css.toque} />}
       <circle r={anillo} className={css.anillo} strokeWidth={2 * k} />
       {figura}
       {m.rotulo && (

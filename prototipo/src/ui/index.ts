@@ -1,6 +1,7 @@
 /** Componentes compartidos de la demo. Ver el catálogo en la ruta /componentes. */
 export { Shell, ShellPublico, type ShellProps } from './Shell';
-export { Mapa, type MapaProps, type Marcador, type FormaMarcador, type TonoMarcador, type Encuadre } from './Mapa';
+export { Mapa } from './MapaDiferido';
+export type { MapaProps, Marcador, FormaMarcador, TonoMarcador, Encuadre } from './Mapa';
 export { Croquis, type CroquisProps, type SiniestroCroquis } from './Croquis';
 export { IdentidadLugar, EscudoRuta, ChapaCalle, Mojon, RomboIndice } from './IdentidadLugar';
 export { Boton, type BotonProps, type VarianteBoton } from './Boton';

@@ -1,0 +1,16 @@
+{
+  "name": "validacion-punto-ciego",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Validación del evaluador: app publicada en Vercel, carpeta de Drive y repositorio público de Punto Ciego",
+  "type": "module",
+  "scripts": {
+    "validar": "playwright test",
+    "validar:publicada": "playwright test --project=publicada --project=enlaces",
+    "validar:local": "playwright test --project=local",
+    "instalar-navegador": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1"
+  }
+}

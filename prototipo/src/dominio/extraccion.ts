@@ -14,7 +14,7 @@ import { claveCalle, normalizar } from './texto';
 import { normalizarRuta } from './postes';
 import { buscarCalle } from './normalizacion';
 import type { LugarExtraido, TipoSiniestro, TipoUsuario, Victima } from './tipos';
-import cartografia from '../datos/cartografia.json';
+import cartografia from '../datos/cartografia-base.json';
 
 export interface Extraccion {
   lugar: LugarExtraido | null;
@@ -49,7 +49,7 @@ const RE_CORREDOR = new RegExp(
 const RE_BARRIO = new RegExp(`(?<![A-Za-z])[Bb]arrio\\s+(${NOMBRE})`);
 
 const LOCALIDADES: readonly string[] = [
-  ...cartografia.provincia.ciudades.map((c) => c.nombre),
+  ...cartografia.ciudades.map((c) => c.nombre),
   'Río Primero',
   'Arroyito',
   'Las Varillas',

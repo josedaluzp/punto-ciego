@@ -323,6 +323,8 @@
 
 /* ── Cara pública ────────────────────────────────────────────────────── */
 .publico {
+  /* Alto de la banda de datos sintéticos del pie: lo usa el botón fijo del reclamo. */
+  --alto-pie-publico: var(--alto-banda);
   min-height: 100dvh;
   display: flex;
   flex-direction: column;

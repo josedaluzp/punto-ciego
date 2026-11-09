@@ -11,10 +11,8 @@
 import type { CSSProperties } from 'react';
 import { decimal } from '../dominio/formato';
 import css from './IdentidadLugar.module.css';
+import { medidasEscudo, medidasRombo, type TamanoRombo } from './medidasSignos';
 import { ajustarChapa } from './textoChapa';
-
-/** Tamaño mínimo del escudo: por debajo, "RUTA NAC." deja de leerse. */
-const ESCUDO_MINIMO = 36;
 
 /** Base mínima de la chapa: por debajo, el nombre de la calle no se lee. */
 const CHAPA_MINIMA = 34;
@@ -24,8 +22,7 @@ export function EscudoRuta({ ruta, tamano = 40 }: { ruta: string; tamano?: numbe
   const provincial = ruta.startsWith('RP');
   const numero = ruta.replace(/^R[NP]\s*/, '');
   const etiqueta = `${provincial ? 'Ruta provincial' : 'Ruta nacional'} ${numero}`;
-  const px = Math.max(tamano, ESCUDO_MINIMO);
-  const cifra = numero.length >= 3 ? 14 : numero.length === 2 ? 17 : 19;
+  const { px, rotulo, anchoRotulo, cifra } = medidasEscudo(tamano, numero);
   const anchoCifra = numero.length * 0.6 * cifra;
   return (
     <svg width={px} height={px} viewBox="0 0 40 40" role="img" aria-label={etiqueta} className={css.signo}>
@@ -40,9 +37,9 @@ export function EscudoRuta({ ruta, tamano = 40 }: { ruta: string; tamano?: numbe
         textAnchor="middle"
         fontFamily="var(--ui)"
         fontWeight="700"
-        fontSize="7.6"
+        fontSize={rotulo}
         fill="var(--negro)"
-        textLength="29"
+        textLength={anchoRotulo}
         lengthAdjust="spacingAndGlyphs"
       >
         {provincial ? 'RUTA PROV.' : 'RUTA NAC.'}
@@ -76,7 +73,7 @@ export function ChapaCalle({ tamano = 40, titulo, calle }: { tamano?: number; ti
   const ancho = anchoChapa(tamano);
   const alto = Math.round(Math.max(tamano, CHAPA_MINIMA) * 0.66);
   const disponible = ancho - 8;
-  const { prefijo, nombre, fuente, comprimir } = ajustarChapa(calle, disponible, Math.min(12, alto * 0.5));
+  const { prefijo, nombre, fuente, fuentePrefijo, comprimir } = ajustarChapa(calle, disponible, Math.min(12, alto * 0.5));
 
   return (
     <svg width={ancho} height={alto} viewBox={`0 0 ${ancho} ${alto}`} role="img" aria-label={etiqueta} className={css.signo}>
@@ -93,7 +90,7 @@ export function ChapaCalle({ tamano = 40, titulo, calle }: { tamano?: number; ti
         {...(comprimir ? { textLength: disponible, lengthAdjust: 'spacingAndGlyphs' } : {})}
       >
         {prefijo && (
-          <tspan fontSize={fuente * 0.72} fontWeight="600">
+          <tspan fontSize={fuentePrefijo} fontWeight="600">
             {prefijo}{' '}
           </tspan>
         )}
@@ -111,7 +108,7 @@ function anchoChapa(tamano: number): number {
 export function Mojon({ km }: { km: number }) {
   const texto = Number.isInteger(km) ? String(km) : decimal(km, 1);
   return (
-    <span className={css.mojon} aria-label={`kilómetro ${texto}`}>
+    <span className={css.mojon} role="img" aria-label={`kilómetro ${texto}`}>
       <small aria-hidden="true">KM</small>
       <span aria-hidden="true">{texto}</span>
     </span>
@@ -119,8 +116,8 @@ export function Mojon({ km }: { km: number }) {
 }
 
 /** Rombo amarillo de prevención con el índice de riesgo. */
-export function RomboIndice({ valor, tamano = 'normal' }: { valor: number; tamano?: 'chico' | 'normal' | 'grande' }) {
-  const px = { chico: 40, normal: 44, grande: 56 }[tamano];
+export function RomboIndice({ valor, tamano = 'normal' }: { valor: number; tamano?: TamanoRombo }) {
+  const { px, cifra } = medidasRombo(tamano);
   const texto = decimal(valor);
   return (
     <svg width={px} height={px} viewBox="0 0 40 40" role="img" aria-label={`Índice de riesgo ${texto}`} className={css.signo}>
@@ -131,7 +128,7 @@ export function RomboIndice({ valor, tamano = 'normal' }: { valor: number; taman
         textAnchor="middle"
         fontFamily="var(--ui)"
         fontWeight="800"
-        fontSize="10.6"
+        fontSize={cifra}
         fill="var(--negro)"
         style={{ fontVariantNumeric: 'tabular-nums' }}
         textLength={texto.length > 4 ? 25 : undefined}

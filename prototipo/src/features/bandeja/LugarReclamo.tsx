@@ -20,7 +20,11 @@ export function LugarReclamo({ r }: { r: Reclamo }) {
           <span>{r.evidencia ? `${r.evidencia.medio.split(',')[0]} · sin fecha de inicio` : r.ambito}</span>
         </p>
       </div>
-      {r.km !== undefined && <Mojon km={r.km} />}
+      {r.km !== undefined && (
+        <span className={css.lugarKm}>
+          <Mojon km={r.km} />
+        </span>
+      )}
     </div>
   );
 }

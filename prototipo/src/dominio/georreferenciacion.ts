@@ -12,7 +12,7 @@
  *   debajo de `UMBRAL_CONFIANZA` queda en revisión y fuera de todo cálculo
  *   (RF08) hasta que la confirme el analista (CU03).
  */
-import cartografia from '../datos/cartografia.json';
+import cartografia from '../datos/cartografia-base.json';
 import { distanciaMetros, type LatLon } from './geo';
 import { servicioNormalizacionSimulado, type ServicioNormalizacion } from './normalizacion';
 import { coberturaPostes, posicionPorProgresiva } from './postes';
@@ -53,7 +53,7 @@ export interface Localidad extends LatLon {
   departamento: string;
 }
 
-export const LOCALIDADES: readonly Localidad[] = cartografia.provincia.ciudades.map((c) => ({
+export const LOCALIDADES: readonly Localidad[] = cartografia.ciudades.map((c) => ({
   nombre: c.nombre,
   lat: c.lat,
   lon: c.lon,

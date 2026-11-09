@@ -69,7 +69,7 @@
   font-family: var(--ui);
   font-variant-numeric: tabular-nums;
   font-size: var(--t-chico);
-  line-height: 1.35;
+  line-height: var(--aviso-interlineado);
   border-radius: var(--radio);
 }
 
@@ -92,6 +92,10 @@
   text-align: center;
   color: var(--ambar-tinta);
   background: var(--ambar-f);
-  border-top: 1px dashed var(--ambar);
-  padding: 8px var(--e-4);
+  border-top: var(--banda-borde) dashed var(--ambar);
+  padding: var(--banda-relleno) var(--e-4);
+  /* Un solo renglón: el alto tiene que coincidir con --alto-banda. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

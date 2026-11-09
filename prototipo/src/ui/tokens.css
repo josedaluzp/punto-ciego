@@ -60,6 +60,11 @@
   --t-titulo: 19px;
   --t-cuerpo: 14px;
   --t-chico: 12.5px;
+  /* Banda de aviso al pie (.aviso-banda): su alto lo usan los botones fijos encima de ella. */
+  --aviso-interlineado: 1.35;
+  --banda-borde: 1px;
+  --banda-relleno: 8px;
+  --alto-banda: calc(var(--banda-borde) + 2 * var(--banda-relleno) + var(--t-chico) * var(--aviso-interlineado));
   --t-grande: 28px;
 
   /* Espacio (módulo de la grilla: 24 px) */

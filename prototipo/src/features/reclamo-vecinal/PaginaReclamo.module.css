@@ -400,6 +400,21 @@
   font-size: var(--t-pub-cuerpo);
 }
 
+/* En el teléfono el mapa ocupa la primera pantalla: el botón del primer paso
+   queda fijo al pie, sobre la banda de datos sintéticos, para que se vea sin
+   desplazar (KT-11). */
+@media (max-width: 640px) {
+  .accionFija {
+    position: sticky;
+    bottom: var(--alto-pie-publico, 0px);
+    z-index: 2;
+    margin-inline: calc(-1 * var(--e-4));
+    padding: var(--e-3) var(--e-4);
+    background: var(--papel);
+    border-top: 1px solid var(--linea-suave);
+  }
+}
+
 /* ── Comprobante ── */
 
 .constancia {

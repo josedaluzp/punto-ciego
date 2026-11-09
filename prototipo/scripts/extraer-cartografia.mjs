@@ -10,6 +10,9 @@
  *                               ciudades con lat/lon y departamento, capas
  *                               viales de la ciudad de Córdoba y los dos
  *                               ajustes lineales lat/lon <-> x/y.
+ *   src/datos/cartografia-base.json  sólo los ajustes y las ciudades: lo que
+ *                               usa el dominio al arrancar, sin el dibujo del
+ *                               mapa (que se baja aparte, con el mapa).
  *   src/datos/postes.json       capa simulada de postes kilométricos: un poste
  *                               por kilómetro entre las progresivas de anclaje
  *                               de cada ruta, ajustado a la traza dibujada.
@@ -249,6 +252,8 @@ const cartografia = {
 
 const destino = resolve(RAIZ, 'src/datos/cartografia.json');
 writeFileSync(destino, JSON.stringify(cartografia));
+const base = { fuente: cartografia.fuente, proyeccion: cartografia.proyeccion, ciudades: cartografia.provincia.ciudades };
+writeFileSync(resolve(RAIZ, 'src/datos/cartografia-base.json'), JSON.stringify(base));
 writeFileSync(resolve(RAIZ, 'src/datos/postes.json'), JSON.stringify(postes));
 console.log(`cartografia.json: ${(JSON.stringify(cartografia).length / 1024).toFixed(0)} KB`);
 console.log(`postes.json: ${(JSON.stringify(postes).length / 1024).toFixed(0)} KB`);

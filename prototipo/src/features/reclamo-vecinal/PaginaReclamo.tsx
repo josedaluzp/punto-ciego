@@ -24,6 +24,9 @@ type Paso = 'lugar' | 'detalle' | 'comprobante';
 /** Encuadre inicial: el área central de la ciudad de Córdoba. */
 const ENCUADRE_INICIAL: Encuadre = { centro: { lat: -31.405, lon: -64.2 }, radioKm: 6 };
 const ID_PIN = 'lugar-del-reclamo';
+/** Largo máximo de la calle y de la altura escritas a mano (KT-10): el nombre más largo del nomenclador tiene menos de 40 letras. */
+const LARGO_MAXIMO_CALLE = 80;
+const LARGO_MAXIMO_ALTURA = 5;
 
 export function PaginaReclamo() {
   const [paso, setPaso] = useState<Paso>('lugar');
@@ -217,6 +220,7 @@ function PasoLugar({
             etiqueta="Calle"
             list={idLista}
             autoComplete="off"
+            maxLength={LARGO_MAXIMO_CALLE}
             value={calle}
             onChange={(e) => setCalle(e.target.value)}
             onKeyDown={(e) => {
@@ -238,6 +242,7 @@ function PasoLugar({
             etiqueta="Altura"
             inputMode="numeric"
             autoComplete="off"
+            maxLength={LARGO_MAXIMO_ALTURA}
             value={altura}
             onChange={(e) => setAltura(e.target.value)}
             onKeyDown={(e) => {
@@ -257,9 +262,11 @@ function PasoLugar({
         </div>
       </details>
 
-      <Boton variante="primario" ancho onClick={continuar} className={css.principal} aria-describedby={error ? idError : undefined}>
-        Continuar
-      </Boton>
+      <div className={css.accionFija}>
+        <Boton variante="primario" ancho onClick={continuar} className={css.principal} aria-describedby={error ? idError : undefined}>
+          Continuar
+        </Boton>
+      </div>
     </section>
   );
 }

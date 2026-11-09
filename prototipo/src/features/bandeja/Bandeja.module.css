@@ -115,6 +115,34 @@
   min-width: 0;
 }
 
+.lugarKm {
+  display: inline-flex;
+}
+
+/* En el teléfono el mojón baja debajo del escudo, como en el costado de la
+   ruta, para que la tabla entre a 360 px sin perder ningún signo. */
+@media (max-width: 640px) {
+  .lugar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      'signo texto'
+      'km texto';
+    align-items: center;
+    gap: 6px 10px;
+  }
+  .lugar > :first-child {
+    grid-area: signo;
+  }
+  .lugarTexto {
+    grid-area: texto;
+  }
+  .lugarKm {
+    grid-area: km;
+    justify-content: center;
+  }
+}
+
 .lugarNombre {
   display: flex;
   flex-wrap: wrap;
@@ -158,6 +186,13 @@
 
 .estado {
   white-space: nowrap;
+}
+
+/* En el teléfono el estado puede ir en dos renglones («en / verificación») para que la tabla entre a 360 px. */
+@media (max-width: 640px) {
+  .estado {
+    white-space: normal;
+  }
 }
 
 /* Vista previa */

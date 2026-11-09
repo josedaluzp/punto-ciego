@@ -19,7 +19,8 @@ demostración, sin registro).
 | Carpeta | Qué contiene |
 |---|---|
 | [`prototipo/`](prototipo/) | La aplicación: casos de uso, arquitectura, pruebas y cómo correrla en su [README](prototipo/README.md) |
-| [`video/`](video/) | El proyecto Remotion que monta el video de la demostración a partir de las tomas que graba `prototipo/demo` |
+| [`video/`](video/) | El proyecto Remotion que monta el video de la demostración ([README](video/README.md)) |
+| [`validacion/`](validacion/) | Pruebas de Playwright que validan la app publicada, la carpeta de Drive y este repositorio ([README](validacion/README.md)) |
 
 ## Ponerlo en marcha
 
@@ -31,5 +32,21 @@ npm install
 npm run dev          # http://localhost:5173
 ```
 
-Las pruebas: `npm run test` (unitarias) y `npm run e2e` (de punta a punta, la primera
-vez con `npx playwright install chromium`).
+## Probarlo
+
+Desde `prototipo/`:
+
+```bash
+npm run lint                        # ESLint y TypeScript estricto
+npm run test                        # pruebas unitarias (Vitest)
+npm run build                       # compilación a dist/
+npx playwright install chromium     # sólo la primera vez
+npm run e2e                         # pruebas de punta a punta (Playwright)
+```
+
+`npm run e2e` compila y sirve la app en el puerto 4173, y reutiliza un servidor que ya
+esté escuchando ahí. Si ese puerto lo ocupa otro proyecto, conviene elegir otro con
+`PUERTO_E2E=4391 npm run e2e` (bash) o `$env:PUERTO_E2E=4391; npm run e2e` (PowerShell).
+
+`npm run cartografia` regenera la cartografía desde los datos de la Entrega 2, que no
+forman parte de este repositorio; los archivos que produce ya están incluidos.

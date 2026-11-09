@@ -15,9 +15,9 @@
  *   mismo ajuste de `entregas/entrega-3/scripts/interfaces.py`.
  *
  * Los coeficientes los calcula `scripts/extraer-cartografia.mjs` y quedan en
- * `src/datos/cartografia.json`.
+ * `src/datos/cartografia-base.json`.
  */
-import cartografia from '../datos/cartografia.json';
+import cartografia from '../datos/cartografia-base.json';
 import type { LatLon } from './geo';
 
 export interface Ajuste {

@@ -12,7 +12,10 @@ export type EstadoFila = 'alerta' | 'revision' | 'confirmado' | 'cerrado';
 export interface Columna<T> {
   clave: string;
   titulo: ReactNode;
-  /** Texto del encabezado para lectores de pantalla, si `titulo` es abreviado. */
+  /**
+   * Título completo si `titulo` es abreviado: se suma, oculto a la vista,
+   * después de la abreviatura y queda como `title` del encabezado.
+   */
   tituloCompleto?: string;
   alinear?: 'izquierda' | 'derecha';
   /** Ancho CSS de la columna. */
@@ -92,8 +95,12 @@ export function Tabla<T>({ etiqueta, columnas, filas, claveFila, seleccionada, o
                   className={claseCelda(c)}
                 >
                   {c.orden ? (
-                    <button type="button" className={css.ordenar} onClick={() => alternar(c.clave)} aria-label={c.tituloCompleto}>
-                      <span>{c.titulo}</span>
+                    <button type="button" className={css.ordenar} onClick={() => alternar(c.clave)} title={c.tituloCompleto}>
+                      <span>
+                        {c.titulo}
+                        {/* El nombre accesible empieza con lo que se ve (WCAG 2.5.3) y suma el título completo. */}
+                        {c.tituloCompleto && <span className={css.paraLector}> ({c.tituloCompleto})</span>}
+                      </span>
                       <svg width="9" height="12" viewBox="0 0 9 12" aria-hidden="true" className={css.flechas}>
                         <path d="M1.5 4.5L4.5 1.5 7.5 4.5" className={activa && orden!.sentido === 'asc' ? css.on : undefined} />
                         <path d="M1.5 7.5L4.5 10.5 7.5 7.5" className={activa && orden!.sentido === 'desc' ? css.on : undefined} />

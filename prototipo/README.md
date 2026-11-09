@@ -83,12 +83,14 @@ npm run dev          # http://localhost:5173
 | Script | Qué hace |
 |---|---|
 | `npm run dev` | Servidor de desarrollo de Vite |
-| `npm run build` | Chequeo de tipos (`tsc -b`) y compilación a `dist/` |
+| `npm run build` | Chequeo de tipos (`tsc -b`), compilación a `dist/` y control del bundle (`scripts/verificar-bundle.mjs`: ningún chunk de JS de más de 300 KB y fuentes sólo latin) |
 | `npm run preview` | Sirve `dist/` en http://localhost:4173 |
 | `npm run lint` | ESLint y TypeScript estricto sin emitir |
 | `npm run test` | Pruebas unitarias del dominio, la semilla y las acciones (Vitest) |
 | `npm run e2e` | Pruebas de punta a punta (Playwright, Chromium a 1440×900 y a 390×844) |
-| `npm run cartografia` | Regenera `src/datos/cartografia.json` y `src/datos/postes.json` desde `mapa.json` de la E2 |
+| `npm run cartografia` | Regenera `src/datos/cartografia.json`, `src/datos/cartografia-base.json` (ajustes y ciudades, lo que usa el dominio al arrancar) y `src/datos/postes.json` desde `mapa.json` de la E2 |
+| `npm run auditoria` | `npm audit` de las dependencias de producción (falla desde severidad moderada) |
+| `npm run auditoria:dev` | `npm audit` de todas las dependencias (falla desde severidad alta) |
 
 La primera vez que se corren las pruebas de punta a punta hace falta el navegador:
 

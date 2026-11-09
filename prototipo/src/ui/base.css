@@ -1,11 +1,12 @@
-/* Estilos globales: papel, letra y superficies del navegador. */
-@import '@fontsource/archivo/400.css';
-@import '@fontsource/archivo/500.css';
-@import '@fontsource/archivo/600.css';
-@import '@fontsource/archivo/700.css';
-@import '@fontsource/archivo/800.css';
-@import '@fontsource/courier-prime/400.css';
-@import '@fontsource/courier-prime/700.css';
+/* Estilos globales: papel, letra y superficies del navegador.
+   Fuentes: sólo el subconjunto latin, que cubre el castellano completo (KT-06). */
+@import '@fontsource/archivo/latin-400.css';
+@import '@fontsource/archivo/latin-500.css';
+@import '@fontsource/archivo/latin-600.css';
+@import '@fontsource/archivo/latin-700.css';
+@import '@fontsource/archivo/latin-800.css';
+@import '@fontsource/courier-prime/latin-400.css';
+@import '@fontsource/courier-prime/latin-700.css';
 @import './tokens.css';
 
 *,

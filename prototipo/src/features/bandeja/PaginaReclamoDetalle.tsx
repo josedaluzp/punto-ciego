@@ -234,9 +234,14 @@ function ItemSiniestro({ p }: { p: SiniestroPosterior }) {
           <span className={css.siniestroSub}>
             Crónica de origen: {c.medio}, {fecha(c.fechaPublicacion)}
             {c.origen === 'sintetico' ? ' (sintética)' : ''} ·{' '}
-            <a href={c.url} target="_blank" rel="noreferrer noopener">
-              ver la crónica
-            </a>
+            {/* La crónica sintética tiene una dirección de ejemplo que no existe: se abre dentro de la demo. */}
+            {c.origen === 'sintetico' ? (
+              <Link to={`/siniestros/cronicas?siniestro=${encodeURIComponent(s.id)}`}>ver la crónica</Link>
+            ) : (
+              <a href={c.url} target="_blank" rel="noreferrer noopener">
+                ver la crónica
+              </a>
+            )}
           </span>
         )}
       </span>

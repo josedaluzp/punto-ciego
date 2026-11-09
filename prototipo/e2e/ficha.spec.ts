@@ -201,6 +201,8 @@ test.describe('emitir una ficha (CU06)', () => {
 
   test('pide al menos una contramedida cuando hay recomendadas', async ({ page }) => {
     await page.goto('/priorizacion/fichas/nueva?concentracion=C-0019');
+    // `all()` no espera: la pantalla llega en su propio chunk, así que primero se espera la primera casilla.
+    await expect(acta(page).getByRole('checkbox').first()).toBeVisible();
     for (const c of await acta(page).getByRole('checkbox').all()) await c.uncheck();
     await page.getByRole('button', { name: 'Emitir ficha FI-2026-0043' }).click();
     await expect(page.getByRole('alert')).toHaveText('Elegí al menos una contramedida para incluir en la ficha.');

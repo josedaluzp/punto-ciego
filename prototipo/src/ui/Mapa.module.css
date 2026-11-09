@@ -134,6 +134,11 @@
   stroke: transparent;
 }
 
+.toque {
+  fill: transparent;
+  stroke: none;
+}
+
 .marcador:focus-visible .anillo {
   stroke: var(--carbon);
 }

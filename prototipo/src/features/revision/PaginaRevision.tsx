@@ -127,7 +127,7 @@ export function PaginaRevision() {
                         <span className={css.itemMotivo}>{resumenMotivo(s)}</span>
                         <span className={css.itemPie}>
                           <ChipEstado estado="en-revision">{etiquetaPrecision(s.ubicacion.precision)}</ChipEstado>
-                          <span className={css.cifras} aria-label={`confianza ${formato.decimal(s.ubicacion.confianza)}`}>
+                          <span className={css.cifras} role="img" aria-label={`confianza ${formato.decimal(s.ubicacion.confianza)}`}>
                             {formato.decimal(s.ubicacion.confianza)}
                           </span>
                         </span>

@@ -15,7 +15,8 @@ Comportamiento heredado de la E2: `prototipo/docs/rea-inventario.md`.
   "Restablecer datos de demostración" visible en el riel.
 - Mapa: SVG propio a partir de `entregas/entrega-2/diseno-navegacion/datos/mapa.json`
   (provincia de Córdoba: `provincias.cordoba` y ciudad `ciudades.cordoba`). Un script
-  `scripts/extraer-cartografia.mjs` genera `src/datos/cartografia.json` (solo Córdoba).
+  `scripts/extraer-cartografia.mjs` genera `src/datos/cartografia.json` (solo Córdoba) y
+  `src/datos/cartografia-base.json` (ajustes y ciudades: lo que usa el dominio sin el dibujo del mapa).
   Proyección lat/lon ↔ x/y documentada en `src/dominio/proyeccion.ts` (ajuste lineal por
   eje con los puntos de control reales, como `entregas/entrega-3/scripts/interfaces.py`).
 - Fuentes: Archivo y Courier Prime autoalojadas (`@fontsource/archivo`, `@fontsource/courier-prime`).

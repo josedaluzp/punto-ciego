@@ -21,7 +21,7 @@ describe('textoChapa', () => {
 
 describe('ajustarChapa', () => {
   it('un nombre corto entra entero con el cuerpo pedido', () => {
-    expect(ajustarChapa('Av. Colón', 62, 11)).toEqual({ prefijo: 'AV.', nombre: 'COLÓN', fuente: 11, comprimir: false });
+    expect(ajustarChapa('Av. Colón', 62, 11)).toEqual({ prefijo: 'AV.', nombre: 'COLÓN', fuente: 11, fuentePrefijo: 9, comprimir: false });
   });
 
   it('un nombre largo deja palabras antes que bajar del cuerpo mínimo', () => {
