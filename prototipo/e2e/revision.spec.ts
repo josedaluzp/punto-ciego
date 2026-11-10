@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page } from './fixtures';
 
 /** CU03 Revisar ubicación de baja confianza (RF08, RF09) · Figura 16. */
 

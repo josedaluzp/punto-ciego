@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page } from './fixtures';
 
 /**
  * Regresiones de los hallazgos del reporte de pruebas k0lmenIA (2026-11-09).

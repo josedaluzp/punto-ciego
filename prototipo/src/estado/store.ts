@@ -28,11 +28,14 @@ function hayDatosGuardados(): boolean {
   }
 }
 
-const VACIO: DatosDemo = { cronicas: [], siniestros: [], reclamos: [], fichas: [], registroConcentraciones: {} };
-
-/** Estado inicial: la semilla, salvo que haya datos guardados (que se cargan enseguida). */
+/**
+ * Estado inicial: siempre la semilla. Los datos guardados se cargan enseguida
+ * encima, pero la hidratación de las pantallas pre-renderizadas (KT-06b) usa
+ * este estado (`getInitialState`), que coincide con el HTML del build; el
+ * render siguiente muestra lo guardado.
+ */
 export function estadoInicial(): EstadoDemo {
-  return { ...(hayDatosGuardados() ? VACIO : semilla()), usuarioId: USUARIO_PREDETERMINADO };
+  return { ...semilla(), usuarioId: USUARIO_PREDETERMINADO };
 }
 
 export const useDemo = create<EstadoDemo>()(

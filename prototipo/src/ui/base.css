@@ -9,6 +9,58 @@
 @import '@fontsource/courier-prime/latin-700.css';
 @import './tokens.css';
 
+/*
+ * Respaldo de Archivo mientras baja (KT-06b): Arial ajustada al ancho y a la
+ * altura de cada peso de Archivo, medidos en Chromium. Así el texto del HTML
+ * pre-renderizado no se corre cuando llega la fuente (CLS) y no hace falta
+ * precargarla, que demoraría el primer pintado.
+ */
+@font-face {
+  font-family: 'Archivo respaldo';
+  font-weight: 400;
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans');
+  size-adjust: 98.6%;
+  ascent-override: 89.2%;
+  descent-override: 21.3%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Archivo respaldo';
+  font-weight: 500;
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans');
+  size-adjust: 100.3%;
+  ascent-override: 87.7%;
+  descent-override: 20.9%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Archivo respaldo';
+  font-weight: 600;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold');
+  size-adjust: 95.7%;
+  ascent-override: 91.9%;
+  descent-override: 21.9%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Archivo respaldo';
+  font-weight: 700;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold');
+  size-adjust: 99%;
+  ascent-override: 88.9%;
+  descent-override: 21.2%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Archivo respaldo';
+  font-weight: 800;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold');
+  size-adjust: 103.9%;
+  ascent-override: 84.7%;
+  descent-override: 20.2%;
+  line-gap-override: 0%;
+}
+
 *,
 *::before,
 *::after {

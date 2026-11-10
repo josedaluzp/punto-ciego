@@ -3,5 +3,16 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/siniestros", "destination": "/siniestros/index.html" },
+    { "source": "/priorizacion", "destination": "/priorizacion/index.html" },
+    { "source": "/priorizacion/fichas", "destination": "/priorizacion/fichas/index.html" },
+    { "source": "/siniestros/cronicas", "destination": "/siniestros/cronicas/index.html" },
+    { "source": "/siniestros/revision", "destination": "/siniestros/revision/index.html" },
+    { "source": "/reclamo", "destination": "/reclamo/index.html" },
+    { "source": "/reclamos", "destination": "/reclamos/index.html" },
+    { "source": "/componentes", "destination": "/componentes/index.html" },
+    { "source": "/(.*)", "destination": "/spa.html" }
+  ]
 }

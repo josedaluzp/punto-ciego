@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page } from './fixtures';
 import { RUTAS as RUTAS_DEMO } from '../src/rutas/lista';
 
 /** Todas las rutas de la demo (SPEC, "Rutas y paquetes"), más la raíz y una inexistente. */

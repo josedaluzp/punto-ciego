@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page } from './fixtures';
 
 /** CU06 (emitir ficha de intervención) y CU07 (recomendar contramedidas), más el listado de fichas emitidas. */
 

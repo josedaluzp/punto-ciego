@@ -5,7 +5,7 @@
  */
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page } from './fixtures';
 
 const CLAVE = 'punto-ciego:v1';
 const FOTO = fileURLToPath(new URL('../public/fotos/foto-danio-1.jpg', import.meta.url));

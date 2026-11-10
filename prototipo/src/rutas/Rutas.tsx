@@ -3,7 +3,7 @@
  * reemplaza el contenido de su página en `src/features/<feature>/`; la tabla
  * de rutas es de la base.
  */
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Link, Navigate, Route, Routes } from 'react-router-dom';
 import { Shell, Vacio, claseBoton } from '../ui';
 
@@ -35,8 +35,21 @@ export function Rutas() {
         <Route path="/componentes" element={<Catalogo />} />
         <Route path="*" element={<NoEncontrada />} />
       </Routes>
+      <MarcaHidratada />
     </Suspense>
   );
+}
+
+/**
+ * Marca `<html data-hidratado>` cuando la pantalla terminó de hidratarse (va
+ * en el mismo Suspense que la ruta, así que su efecto corre después). La usan
+ * las pruebas e2e para no tocar el HTML pre-renderizado antes de tiempo.
+ */
+function MarcaHidratada() {
+  useEffect(() => {
+    document.documentElement.setAttribute('data-hidratado', '');
+  }, []);
+  return null;
 }
 
 function NoEncontrada() {

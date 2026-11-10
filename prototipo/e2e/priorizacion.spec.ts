@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page } from './fixtures';
 
 /** CU04 Actualizar concentraciones de riesgo y CU05 Consultar lugares priorizados (Figura 17). */
 

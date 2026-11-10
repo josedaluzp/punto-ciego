@@ -58,13 +58,15 @@ El código se organiza en capas que dependen sólo hacia adentro:
 servidor en Python con FastAPI y una base PostgreSQL con PostGIS (diagrama de
 despliegue). El prototipo ejecuta el mismo dominio en el navegador para poder probarse
 sin instalar un servidor: reemplaza la persistencia por el almacenamiento local, el
-servicio estatal de normalización de direcciones por un nomenclador de calles local y la
-capa de postes kilométricos por una copia local de esa capa. Todo registro se identifica
-como sintético, como exige el requerimiento de trazabilidad.
+servicio estatal de normalización de direcciones por un nomenclador de calles local, la
+capa de postes kilométricos por una capa simulada sobre la traza de cada ruta y el
+catálogo de contramedidas por uno de demostración. El Anexo 6 del documento detalla cada
+sustitución. Todo registro se identifica como sintético, como exige el requerimiento de
+trazabilidad, salvo el caso documentado de Agustín Piaggio, que es real.
 
 ## Calidad
 
-- Más de 200 pruebas unitarias (Vitest) sobre el dominio, la semilla y las acciones.
+- Más de 200 pruebas unitarias (Vitest) sobre el dominio, la semilla, las acciones y la interfaz.
 - Pruebas de punta a punta (Playwright) de cada caso de uso y de la cadena completa, en
   escritorio (1440×900) y en teléfono (390×844). La de la cadena falla además ante
   cualquier error de consola o desborde horizontal.
@@ -83,7 +85,7 @@ npm run dev          # http://localhost:5173
 | Script | Qué hace |
 |---|---|
 | `npm run dev` | Servidor de desarrollo de Vite |
-| `npm run build` | Chequeo de tipos (`tsc -b`), compilación a `dist/` y control del bundle (`scripts/verificar-bundle.mjs`: ningún chunk de JS de más de 300 KB y fuentes sólo latin) |
+| `npm run build` | Chequeo de tipos (`tsc -b`), compilación a `dist/`, pre-render de las pantallas fijas (`scripts/prerenderizar.mjs`, ver «Pre-render») y control del bundle (`scripts/verificar-bundle.mjs`: ningún chunk de JS de más de 300 KB y fuentes sólo latin) |
 | `npm run preview` | Sirve `dist/` en http://localhost:4173 |
 | `npm run lint` | ESLint y TypeScript estricto sin emitir |
 | `npm run test` | Pruebas unitarias del dominio, la semilla y las acciones (Vitest) |
@@ -91,6 +93,7 @@ npm run dev          # http://localhost:5173
 | `npm run cartografia` | Regenera `src/datos/cartografia.json`, `src/datos/cartografia-base.json` (ajustes y ciudades, lo que usa el dominio al arrancar) y `src/datos/postes.json` desde `mapa.json` de la E2 |
 | `npm run auditoria` | `npm audit` de las dependencias de producción (falla desde severidad moderada) |
 | `npm run auditoria:dev` | `npm audit` de todas las dependencias (falla desde severidad alta) |
+| `npm run auditoria:todo` | `npm audit` de todas las dependencias (falla desde severidad moderada). `overrides` fuerza minimatch 11 bajo `@typescript-eslint/typescript-estree` (GHSA-g3hv-75wg-m249): typescript-eslint 8 pide `^10.2.2` y su API de globs no cambió. |
 
 La primera vez que se corren las pruebas de punta a punta hace falta el navegador:
 
@@ -99,7 +102,9 @@ npx playwright install chromium
 ```
 
 `npm run e2e` compila y levanta `npm run preview` solo. Si ya hay un servidor en el
-puerto 4173 lo reutiliza: conviene apagarlo para probar la última compilación.
+puerto 4173 lo reutiliza: conviene apagarlo para probar la última compilación, o elegir
+otro puerto con `PUERTO_E2E=4391 npm run e2e` (en PowerShell, `$env:PUERTO_E2E=4391;
+npm run e2e`).
 
 Antes de abrir un PR: `npm run lint && npm run test && npm run build && npm run e2e`.
 
@@ -108,8 +113,24 @@ Antes de abrir un PR: `npm run lint && npm run test && npm run build && npm run 
 1. Importar el repositorio en Vercel.
 2. **Root Directory: `prototipo`**. El framework se detecta como Vite.
 3. Build command `npm run build`, output `dist` (ya están en `vercel.json`).
-4. `vercel.json` reescribe toda ruta a `index.html`, así que las direcciones profundas
+4. `vercel.json` sirve cada pantalla pre-renderizada con su HTML y el resto de las rutas
+   con `spa.html`, el shell vacío, así que las direcciones profundas
    (`/reclamos/PN-2026-0186`) funcionan al recargar.
+
+### Pre-render
+
+Para que el teléfono pinte la pantalla sin esperar el JS (KT-06b del reporte k0lmenIA),
+el build escribe en `dist/` el HTML de las rutas fijas con la semilla
+(`src/rutas/prerenderizadas.ts`) y el cliente lo hidrata (`src/main.tsx`). Las rutas con
+número o con parámetros se arman en el cliente. Reglas:
+
+- El primer render del cliente tiene que coincidir con el HTML: el store arranca siempre
+  con la semilla y los datos guardados se aplican en el render siguiente.
+- El mapa no va en el HTML: se arma después de hidratar (`MapaDiferido`).
+- Al agregar una ruta fija, sumarla a `RUTAS_PRERENDERIZADAS` y a `vercel.json`
+  (`prerenderizadas.test.ts` lo controla). `vite preview` sirve igual que Vercel.
+- Las pruebas e2e importan `test` de `e2e/fixtures.ts`, que espera la marca
+  `<html data-hidratado>` antes de interactuar.
 
 No hay variables de entorno.
 
@@ -142,6 +163,7 @@ prototipo/
 | `/siniestros/revision` | Ubicaciones en revisión, marcador arrastrable | CU03 |
 | `/priorizacion` | Lugares priorizados: mapa, lista, croquis y actualización | CU04, CU05 |
 | `/priorizacion/fichas`, `/priorizacion/fichas/:numero` | Fichas emitidas y ficha de intervención | CU06, CU07 |
+| `/priorizacion/fichas/nueva?concentracion=:id` | Borrador de la ficha de un lugar, antes de emitirla | CU06, CU07 |
 | `/reclamo` | Reclamo del vecino desde el teléfono y comprobante | CU08 |
 | `/reclamos`, `/reclamos?vista=todos`, `/reclamos/:numero` | Bandeja, detalle, inspección y cierre | CU09, CU10, CU11 |
 | `/componentes` | Catálogo de los componentes compartidos (no figura en el riel) | |

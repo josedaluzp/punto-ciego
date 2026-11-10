@@ -1,7 +1,7 @@
 import { mkdirSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { expect, test, type Browser, type Locator, type Page } from '@playwright/test';
+import { conEsperaDeHidratacion, expect, test, type Browser, type Locator, type Page } from '../e2e/fixtures';
 
 /**
  * Graba la demo de la cadena central para el video de la Entrega 4.
@@ -96,7 +96,7 @@ class Toma {
       ...extra,
     });
     await contexto.addInitScript(CURSOR, !('isMobile' in extra));
-    this.page = await contexto.newPage();
+    this.page = conEsperaDeHidratacion(await contexto.newPage());
     // El video empieza con la página: las marcas se miden desde acá.
     this.t0 = Date.now();
     await this.page.goto('/priorizacion');
@@ -523,6 +523,8 @@ test('escritorio: recorrido completo de la aplicación', async ({ browser }) => 
     await clic(page, fila(page, 'PN-2026-0204'));
     await clic(page, page.getByRole('region', { name: 'Vista previa de PN-2026-0204', exact: true }).getByRole('link', { name: 'Abrir PN-2026-0204' }));
     await expect(page).toHaveURL(/\/reclamos\/PN-2026-0204$/);
+    // La pantalla del reclamo se baja aparte (KT-06): mientras llega, la bandeja sigue a la vista.
+    await expect(page.getByRole('region', { name: 'Vista previa de PN-2026-0204', exact: true })).toHaveCount(0);
     await toma.enfocar(page.getByRole('heading', { level: 2 }).first(), page.getByText(/Cierre desmentido por siniestro/).first());
     await decir('Un cierre no es definitivo. PN-2026-0204 se había cerrado por obra ejecutada, y un siniestro posterior en el lugar lo reabrió como cierre desmentido, sin perder su antigüedad.');
     await toma.leido();

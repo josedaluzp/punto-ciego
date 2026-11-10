@@ -55,7 +55,7 @@
   --mapa-calle-c: oklch(0.88 0.006 262);
 
   /* Letra: tres tamaños por pantalla; la jerarquía la da el peso */
-  --ui: 'Archivo', system-ui, sans-serif;
+  --ui: 'Archivo', 'Archivo respaldo', system-ui, sans-serif;
   --registro: 'Courier Prime', ui-monospace, monospace;
   --t-titulo: 19px;
   --t-cuerpo: 14px;

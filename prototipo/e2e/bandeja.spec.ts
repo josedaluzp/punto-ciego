@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page } from './fixtures';
 
 /**
  * Feature bandeja: CU09 (superficie), CU10 Consultar bandeja de reclamos
