@@ -1,4 +1,28 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test as base, type Page } from '@playwright/test';
+
+/**
+ * La app sirve el HTML pre-renderizado y React lo hidrata después: hasta que
+ * `<html>` lleva `data-hidratado`, un clic o un texto se pierden. Como las e2e
+ * del prototipo (prototipo/e2e/fixtures.ts), `goto` y `reload` esperan esa marca.
+ */
+const test = base.extend({
+  page: async ({ page }, usar) => {
+    const hidratada = () => page.waitForFunction(() => document.documentElement.hasAttribute('data-hidratado'));
+    const ir = page.goto.bind(page);
+    const recargar = page.reload.bind(page);
+    page.goto = async (...args) => {
+      const respuesta = await ir(...args);
+      await hidratada();
+      return respuesta;
+    };
+    page.reload = async (...args) => {
+      const respuesta = await recargar(...args);
+      await hidratada();
+      return respuesta;
+    };
+    await usar(page);
+  },
+});
 
 /**
  * La app de Punto Ciego tal como la recibe el evaluador: cada ruta del README y la

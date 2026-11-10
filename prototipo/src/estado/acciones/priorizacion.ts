@@ -11,6 +11,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { diferencias, resumir, type Diferencias, type LugarCalculado } from '../../features/priorizacion/diferencias';
 import type { Concentracion } from '../../dominio/tipos';
+import { almacenamientoNavegador } from '../almacenamiento';
 import { ahora } from '../reloj';
 import type { Periodo } from '../selectores';
 
@@ -31,7 +32,7 @@ export const useUltimoCalculo = create<EstadoCalculo>()(
   persist(() => ({ ultimo: null as Calculo | null }), {
     name: CLAVE_CALCULO,
     version: 1,
-    storage: createJSONStorage(() => localStorage),
+    storage: createJSONStorage(almacenamientoNavegador),
   }),
 );
 

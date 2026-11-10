@@ -12,6 +12,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { semilla, type DatosDemo } from '../datos/semilla';
 import { USUARIO_PREDETERMINADO } from '../datos/usuarios';
+import { almacenamientoNavegador } from './almacenamiento';
 
 export const CLAVE_ALMACENAMIENTO = 'punto-ciego:v1';
 export const VERSION_DATOS = 1;
@@ -42,7 +43,7 @@ export const useDemo = create<EstadoDemo>()(
   persist(() => estadoInicial(), {
     name: CLAVE_ALMACENAMIENTO,
     version: VERSION_DATOS,
-    storage: createJSONStorage(() => localStorage),
+    storage: createJSONStorage(almacenamientoNavegador),
     onRehydrateStorage: () => (estado, error) => {
       // Datos ilegibles o vacíos: se vuelve a la semilla. La hidratación corre
       // mientras se crea el store, así que la corrección se difiere un turno.
