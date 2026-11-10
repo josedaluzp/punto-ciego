@@ -213,6 +213,12 @@ con la hora real.
 
 ## Video de la demostración
 
+[![Ver el video de la demostración de Punto Ciego (11:32)](docs/capturas/0-video.png)](https://drive.google.com/file/d/1qLHo9dMCloDlFYSqKxr0Ag5t1pC6LU3N/view)
+
+El video final (11:32, narrado) está en
+[Google Drive](https://drive.google.com/file/d/1qLHo9dMCloDlFYSqKxr0Ag5t1pC6LU3N/view).
+Así se genera:
+
 `demo/grabar.spec.ts` recorre la aplicación completa con Playwright, a ritmo de
 persona, y deja el video de cada toma con sus pistas de subtítulos y de cámara.
 El proyecto Remotion de `../video` las monta en el video final.

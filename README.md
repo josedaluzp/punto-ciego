@@ -31,7 +31,14 @@ advertido el peligro y nadie respondió antes de que ocurriera un siniestro.
 - El usuario de arriba a la derecha cambia el rol con el que trabajás (ver
   [Usuarios de demostración](#usuarios-de-demostración)).
 
-También hay un **video de la demostración** (unos 12 minutos, narrado) en la
+## Video de la demostración
+
+Un recorrido narrado por toda la aplicación (11:32): cómo se levanta localmente y cada
+caso de uso, de la crónica a la obra. Hacé clic en la imagen para verlo en Google Drive.
+
+[![Ver el video de la demostración de Punto Ciego (11:32)](prototipo/docs/capturas/0-video.png)](https://drive.google.com/file/d/1qLHo9dMCloDlFYSqKxr0Ag5t1pC6LU3N/view)
+
+El video, el código y el instructivo de puesta en marcha también están en la
 [carpeta de la entrega](https://drive.google.com/drive/folders/1h6gJafeSdBVx3QS7ACGtBTXZHZjTLiQQ).
 
 ## Recorrido sugerido (10 minutos)
