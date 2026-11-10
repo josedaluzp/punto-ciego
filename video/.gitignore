@@ -2,3 +2,5 @@ node_modules/
 out/
 # Las tomas se regeneran con `npm run demo:grabar` en ../prototipo y `npm run traer` acá.
 public/tomas/
+# La narración se regenera con `npm run voz` (scripts/narrar.py).
+public/voz/

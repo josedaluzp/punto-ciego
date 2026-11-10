@@ -15,6 +15,7 @@ import { C, PAPEL, REGISTRO, UI } from './estilo';
 import { Encabezado, useEntrada } from './comunes';
 import { CAPITULOS, PASOS, type Capitulo, type Toma } from './guion';
 import { PuestaEnMarcha, DURACION_PUESTA } from './PuestaEnMarcha';
+import { Narracion, segundosDe, TEXTOS } from './voz';
 
 interface Rect {
   x: number;
@@ -33,6 +34,10 @@ interface Pistas {
 const PISTAS: Record<Toma, Pistas> = { escritorio, vecino };
 const TRANSICION = 14;
 const PLACAS = { apertura: 4.5, problema: 5, cadena: 5.5, cierre: 6 };
+type Placa = keyof typeof PLACAS;
+/** La narración de cada placa empieza a los 0,5 s; la placa dura al menos eso más su voz y un respiro. */
+const VOZ_PLACA = 0.5;
+const segundosPlaca = (p: Placa) => Math.max(PLACAS[p], VOZ_PLACA + segundosDe(TEXTOS.placas[p]) + 1.2);
 
 /** Tamaño de la toma de escritorio y escala con que se muestra dentro del cuadro. */
 const TOMA = { w: 1920, h: 1080 };
@@ -98,7 +103,7 @@ function useSubtitulo(toma: Toma, inicio: number, fin: number) {
 }
 
 export function duracionTotal(fps: number) {
-  const placas = Object.values(PLACAS).reduce((a, s) => a + Math.round(s * fps), 0);
+  const placas = (Object.keys(PLACAS) as Placa[]).reduce((a, p) => a + Math.round(segundosPlaca(p) * fps), 0);
   const capitulos = CAPITULOS.reduce((a, c) => a + tramo(c, fps).duracion, 0) + DURACION_PUESTA(fps);
   const transiciones = (CAPITULOS.length + Object.keys(PLACAS).length) * TRANSICION;
   return placas + capitulos - transiciones;
@@ -169,6 +174,15 @@ const Cadena: React.FC = () => {
 };
 
 
+/** La narración de cada subtítulo del capítulo, desde el momento en que aparece en pantalla. */
+const VocesDelCapitulo: React.FC<{ toma: Toma; inicio: number; fin: number }> = ({ toma, inicio, fin }) => (
+  <>
+    {PISTAS[toma].subtitulos
+      .filter((s) => s.t >= inicio && s.t <= fin)
+      .map((s) => <Narracion key={s.t} texto={s.texto} desde={(s.t - inicio) / 1000} />)}
+  </>
+);
+
 type PropsCapitulo = { n: number; c: Capitulo; desde: number; inicio: number; fin: number };
 
 const CapituloEscritorio: React.FC<PropsCapitulo> = ({ n, c, desde, inicio, fin }) => {
@@ -184,6 +198,7 @@ const CapituloEscritorio: React.FC<PropsCapitulo> = ({ n, c, desde, inicio, fin 
       <div style={{ marginTop: 16, width: ANCHO, height: TOMA.h * ESCALA, border: `1px solid ${C.linea}`, boxShadow: '0 18px 50px -20px rgba(20,30,60,.35)', overflow: 'hidden', background: C.papel }}>
         <div style={{ width: TOMA.w, height: TOMA.h, transformOrigin: '0 0', transform: `scale(${ESCALA * v.z}) translate(${-v.x}px, ${-v.y}px)` }}>
           <OffthreadVideo src={staticFile('tomas/escritorio.webm')} trimBefore={desde} muted style={{ width: '100%', height: '100%' }} />
+          <VocesDelCapitulo toma="escritorio" inicio={inicio} fin={fin} />
         </div>
       </div>
       <div style={{ marginTop: 14, minHeight: 76, fontFamily: UI, fontSize: 28, lineHeight: 1.35, color: C.tinta, maxWidth: ANCHO, opacity: subtitulo?.opacidad ?? 0 }}>
@@ -200,6 +215,7 @@ const CapituloTelefono: React.FC<PropsCapitulo> = ({ n, c, desde, inicio, fin })
       <div style={{ padding: 14, borderRadius: 54, background: C.riel, boxShadow: '0 30px 70px -25px rgba(20,30,60,.5)', ...useEntrada(0) }}>
         <div style={{ width: 425, height: 920, borderRadius: 42, overflow: 'hidden', background: C.papel }}>
           <OffthreadVideo src={staticFile('tomas/vecino.webm')} trimBefore={desde} muted style={{ width: '100%', height: '100%' }} />
+          <VocesDelCapitulo toma="vecino" inicio={inicio} fin={fin} />
         </div>
       </div>
       <div style={{ width: 760, display: 'flex', flexDirection: 'column', gap: 28 }}>
@@ -234,16 +250,19 @@ export const Demo: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: C.papel }}>
       <TransitionSeries>
-        <TransitionSeries.Sequence durationInFrames={s(PLACAS.apertura)}>
+        <TransitionSeries.Sequence durationInFrames={s(segundosPlaca('apertura'))}>
           <Apertura />
+          <Narracion texto={TEXTOS.placas.apertura} desde={VOZ_PLACA} />
         </TransitionSeries.Sequence>
         {transicion}
-        <TransitionSeries.Sequence durationInFrames={s(PLACAS.problema)}>
+        <TransitionSeries.Sequence durationInFrames={s(segundosPlaca('problema'))}>
           <Problema />
+          <Narracion texto={TEXTOS.placas.problema} desde={VOZ_PLACA} />
         </TransitionSeries.Sequence>
         {transicion}
-        <TransitionSeries.Sequence durationInFrames={s(PLACAS.cadena)}>
+        <TransitionSeries.Sequence durationInFrames={s(segundosPlaca('cadena'))}>
           <Cadena />
+          <Narracion texto={TEXTOS.placas.cadena} desde={VOZ_PLACA} />
         </TransitionSeries.Sequence>
         {transicion}
         <TransitionSeries.Sequence durationInFrames={DURACION_PUESTA(fps)}>
@@ -260,8 +279,9 @@ export const Demo: React.FC = () => {
           ];
         })}
         {transicion}
-        <TransitionSeries.Sequence durationInFrames={s(PLACAS.cierre)}>
+        <TransitionSeries.Sequence durationInFrames={s(segundosPlaca('cierre'))}>
           <Cierre />
+          <Narracion texto={TEXTOS.placas.cierre} desde={VOZ_PLACA} />
         </TransitionSeries.Sequence>
       </TransitionSeries>
     </AbsoluteFill>

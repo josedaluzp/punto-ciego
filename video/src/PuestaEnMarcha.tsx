@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AbsoluteFill, cancelRender, continueRender, delayRender, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
 import { Encabezado, useEntrada } from './comunes';
+import { Narracion, segundosDe, TEXTOS } from './voz';
 import { C, PAPEL, REGISTRO, UI } from './estilo';
 
 /**
@@ -9,31 +10,43 @@ import { C, PAPEL, REGISTRO, UI } from './estilo';
  * hasta la aplicación abierta en el navegador.
  *
  * La salida de `npm install` es la real del ZIP de la entrega; la de Vite
- * reproduce su formato con la versión del proyecto (5.4.21).
+ * reproduce su formato con la versión del proyecto (8.3.7).
  */
 
-const TRAMOS = { repositorio: 20, terminal: 21, navegador: 11 };
+const [S_REPOSITORIO, S_DOMINIO, S_TERMINAL, S_NAVEGADOR] = TEXTOS.puesta;
+
+/**
+ * Cada tramo dura lo que su animación y su narración necesitan; los subtítulos (los
+ * mismos textos que se narran) arrancan cuando terminó el anterior.
+ */
+const RESPIRO = 0.8;
+const INICIO_DOMINIO = Math.max(10, 0.6 + segundosDe(S_REPOSITORIO) + RESPIRO);
+const TRAMOS = {
+  repositorio: Math.max(20, INICIO_DOMINIO + segundosDe(S_DOMINIO) + RESPIRO),
+  terminal: Math.max(21, 0.5 + segundosDe(S_TERMINAL) + RESPIRO),
+  navegador: Math.max(11, 0.5 + segundosDe(S_NAVEGADOR) + 2),
+};
 export const DURACION_PUESTA = (fps: number) => Math.round((TRAMOS.repositorio + TRAMOS.terminal + TRAMOS.navegador) * fps);
 
 const SUBTITULOS: { s: number; texto: string }[] = [
-  { s: 0.6, texto: 'El código fuente se entrega como un repositorio con su README, que explica qué es el prototipo, cómo ponerlo en marcha, cómo se prueba y cómo está organizado.' },
-  { s: 10, texto: 'La lógica del dominio vive en src/dominio, separada de la interfaz. Cada pantalla es una carpeta de src/features, y las pruebas de punta a punta están en e2e.' },
-  { s: 20.5, texto: 'Para ponerlo en marcha sólo hace falta Node.js. Como indica el instructivo, se descomprime el código, se instalan las dependencias y se inicia la aplicación.' },
-  { s: 41.5, texto: 'La aplicación se abre en el navegador, con los datos sintéticos de demostración ya cargados.' },
+  { s: 0.6, texto: S_REPOSITORIO },
+  { s: INICIO_DOMINIO, texto: S_DOMINIO },
+  { s: TRAMOS.repositorio + 0.5, texto: S_TERMINAL },
+  { s: TRAMOS.repositorio + TRAMOS.terminal + 0.5, texto: S_NAVEGADOR },
 ];
 
 /** Árbol del proyecto (prototipo/), con las carpetas de src desplegadas. */
 const ARBOL: { nombre: string; nivel: number; carpeta?: boolean; destacar?: number; nota?: string }[] = [
   { nombre: 'demo', nivel: 0, carpeta: true, nota: 'grabación de este video' },
   { nombre: 'docs', nivel: 0, carpeta: true },
-  { nombre: 'e2e', nivel: 0, carpeta: true, destacar: 13.5, nota: 'pruebas de punta a punta' },
+  { nombre: 'e2e', nivel: 0, carpeta: true, destacar: INICIO_DOMINIO + 3.5, nota: 'pruebas de punta a punta' },
   { nombre: 'public', nivel: 0, carpeta: true },
   { nombre: 'scripts', nivel: 0, carpeta: true },
   { nombre: 'src', nivel: 0, carpeta: true },
   { nombre: 'datos', nivel: 1, carpeta: true, nota: 'semilla de demostración' },
-  { nombre: 'dominio', nivel: 1, carpeta: true, destacar: 10.5, nota: 'reglas del negocio' },
+  { nombre: 'dominio', nivel: 1, carpeta: true, destacar: INICIO_DOMINIO + 0.5, nota: 'reglas del negocio' },
   { nombre: 'estado', nivel: 1, carpeta: true },
-  { nombre: 'features', nivel: 1, carpeta: true, destacar: 12, nota: 'una carpeta por pantalla' },
+  { nombre: 'features', nivel: 1, carpeta: true, destacar: INICIO_DOMINIO + 2, nota: 'una carpeta por pantalla' },
   { nombre: 'rutas', nivel: 1, carpeta: true },
   { nombre: 'ui', nivel: 1, carpeta: true, nota: 'componentes compartidos' },
   { nombre: 'App.tsx', nivel: 1 },
@@ -51,11 +64,11 @@ const TERMINAL: { s: number; texto: string; comando?: boolean; tenue?: boolean; 
   { s: 0.8, prompt: `${RUTA}>`, texto: 'Expand-Archive codigo-fuente-punto-ciego.zip -DestinationPath .', comando: true },
   { s: 4.2, prompt: `${RUTA}>`, texto: 'cd punto-ciego', comando: true },
   { s: 6.0, prompt: `${RUTA}\\punto-ciego>`, texto: 'npm install', comando: true },
-  { s: 8.6, texto: 'added 217 packages in 14s', tenue: true },
+  { s: 8.6, texto: 'added 166 packages in 6s', tenue: true },
   { s: 10.2, prompt: `${RUTA}\\punto-ciego>`, texto: 'npm run dev', comando: true },
   { s: 12.2, texto: '> punto-ciego-prototipo@0.1.0 dev', tenue: true },
   { s: 12.4, texto: '> vite', tenue: true },
-  { s: 13.4, texto: '  VITE v5.4.21  ready in 412 ms' },
+  { s: 13.4, texto: '  VITE v8.3.7  ready in 412 ms' },
   { s: 13.6, texto: '  ➜  Local:   http://localhost:5173/' },
   { s: 13.7, texto: '  ➜  Network: use --host to expose', tenue: true },
 ];
@@ -101,7 +114,7 @@ function useReadme() {
 
 const Repositorio: React.FC<{ s: number }> = ({ s }) => {
   const readme = useReadme();
-  const desplazamiento = interpolate(s, [3, 19], [0, 2600], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const desplazamiento = interpolate(s, [3, TRAMOS.repositorio - 1], [0, 2600], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   return (
     <Ventana titulo="punto-ciego · código fuente" style={{ width: 1536, height: 820, ...useEntrada(0) }}>
       <div style={{ display: 'flex', height: '100%' }}>
@@ -176,6 +189,7 @@ export const PuestaEnMarcha: React.FC = () => {
   return (
     <AbsoluteFill style={{ ...PAPEL, padding: '24px 192px 0' }}>
       <Encabezado n={0} c={{ titulo: 'Puesta en marcha', casos: 'repositorio · instructivo' }} />
+      {SUBTITULOS.map((x) => <Narracion key={x.s} texto={x.texto} desde={x.s} />)}
       <div style={{ marginTop: 16, height: navegador ? 916 : 836, position: 'relative' }}>
         {tramo === 'repositorio' && <Repositorio s={s} />}
         {tramo === 'terminal' && <Terminal s={s - TRAMOS.repositorio} />}

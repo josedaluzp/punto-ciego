@@ -1,0 +1,15 @@
+{
+  "voz": "es-AR-TomasNeural",
+  "placas": {
+    "apertura": "Punto Ciego: sistema de priorización de puntos negros viales y alerta de reclamos desatendidos. Trabajo Final de Grado de Ingeniería en Software, Universidad Siglo 21.",
+    "problema": "Los organismos publican cuántas personas mueren en el tránsito, pero no dónde. Sin ese dato, las intervenciones sobre la vía se deciden por reclamo o por criterio, y ningún lugar puede compararse con otro según su riesgo.",
+    "cadena": "El prototipo implementa la cadena central del sistema: ubicar los siniestros, priorizar los lugares, emitir la ficha de intervención y alertar el reclamo desatendido.",
+    "cierre": "De la crónica a la ficha de intervención, y del reclamo del vecino a la alerta que vuelve visible la omisión. El código fuente y el instructivo de puesta en marcha acompañan este video."
+  },
+  "puesta": [
+    "El código fuente se entrega como un repositorio con su README, que explica qué es el prototipo, cómo ponerlo en marcha, cómo se prueba y cómo está organizado.",
+    "La lógica del dominio vive en src/dominio, separada de la interfaz. Cada pantalla es una carpeta de src/features, y las pruebas de punta a punta están en e2e.",
+    "Para ponerlo en marcha sólo hace falta Node.js. Como indica el instructivo, se descomprime el código, se instalan las dependencias y se inicia la aplicación.",
+    "La aplicación se abre en el navegador, con los datos sintéticos de demostración ya cargados."
+  ]
+}

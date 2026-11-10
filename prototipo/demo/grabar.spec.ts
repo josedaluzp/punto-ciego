@@ -1,4 +1,4 @@
-import { mkdirSync, renameSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { conEsperaDeHidratacion, expect, test, type Browser, type Locator, type Page } from '../e2e/fixtures';
@@ -28,6 +28,16 @@ const MS_POR_PALABRA = 340;
 const LECTURA_MINIMA = 3500;
 /** DEMO_RAPIDO=1 recorre el guion casi sin pausas: sirve para validarlo antes de grabar. */
 const RITMO = process.env.DEMO_RAPIDO ? 0.05 : 1;
+
+/**
+ * Duración de la narración de cada subtítulo (texto → ms), que escribe
+ * ../video/scripts/narrar.py. Con narración, cada subtítulo espera a que termine su
+ * frase y una pausa breve; sin el archivo, sólo el tiempo de lectura.
+ */
+const VOZ: Record<string, number> = existsSync(join(dirname(fileURLToPath(import.meta.url)), 'voz.json'))
+  ? JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'voz.json'), 'utf8'))
+  : {};
+const RESPIRO_VOZ = 700;
 
 interface Rect {
   x: number;
@@ -120,7 +130,8 @@ class Toma {
     await this.leido();
     const t = this.ahora();
     this.subtitulos.push({ t, texto });
-    this.libreDesde = t + RITMO * Math.max(LECTURA_MINIMA, texto.split(/\s+/).length * MS_POR_PALABRA);
+    const voz = texto in VOZ ? VOZ[texto]! + RESPIRO_VOZ : 0;
+    this.libreDesde = t + RITMO * Math.max(LECTURA_MINIMA, texto.split(/\s+/).length * MS_POR_PALABRA, voz);
   }
 
   /**
